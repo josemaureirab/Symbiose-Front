@@ -1,4 +1,4 @@
-# proyectotingesofrontend
+# Project Symbiose-Front
 
 ## Project setup
 ```
