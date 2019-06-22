@@ -1,0 +1,37 @@
+{
+  "name": "proyectotingesofrontend",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build"
+  },
+  "dependencies": {
+    "@amcharts/amcharts4": "^4.4.10",
+    "@fortawesome/fontawesome-free": "^5.9.0",
+    "@mdi/font": "^2.6.95",
+    "axios": "^0.19.0",
+    "core-js": "^2.6.9",
+    "cryptr": "^4.0.2",
+    "daypilot-pro-vue": "https://npm.daypilot.org/daypilot-pro-vue/trial/2019.2.3851.tar.gz",
+    "moment": "^2.24.0",
+    "node-sass": "^4.9.3",
+    "roboto-fontface": "*",
+    "sass-loader": "^7.1.0",
+    "vee-validate": "^2.2.10",
+    "vue": "^2.6.10",
+    "vue-router": "^3.0.3",
+    "vuelidate": "^0.7.4",
+    "vuetify": "^1.5.5",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.8.0",
+    "@vue/cli-service": "^3.8.0",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.1",
+    "vue-cli-plugin-vuetify": "^0.5.0",
+    "vue-template-compiler": "^2.5.21",
+    "vuetify-loader": "^1.0.5"
+  }
+}
