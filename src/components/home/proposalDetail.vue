@@ -22,10 +22,30 @@
 
             <v-card-title primary-title>
             <div>
-                <div class="headline">{{ proposal.name }}</div>
-                <span class="grey--text"> {{ proposalId }}</span>
+                <div class="headline font-weight-black text-uppercase">{{ proposal.name }}</div>
                 <br>
-                <span class="grey--text">Death line</span>
+                <span class="grey--text">I'm a thing. But, like most politicians, he promised more than he could deliver. You won't have time for sleeping, soldier, not with all the bed making you'll be doing. Then we'll go with that data file! Hey, you add a one and two zeros to that or we walk! You're going to do his laundry? I've got to find a way to escape.
+
+                </span>
+                <br>
+                <br>
+                <v-icon class="icon-label" >label</v-icon>
+                <span class="font-weight text-capitalize">Fecha de creación: {{ dateCreation }}</span>
+                <br>
+                <br>
+                <v-icon class="icon-label" >label</v-icon>
+                <span class="font-weight text-capitalize">Fecha límite: {{ dateLimit }}</span>
+                <br>
+                <br>
+                <v-icon class="icon-label" >label</v-icon>
+                <span class="font-weight text-capitalize">Creador: Guillermito Campos</span>
+                <br>
+                <br>
+                <v-icon class="icon-label" >label</v-icon>
+                <span class="font-weight text-capitalize">Presupuesto asociado: R$1000</span>
+                <br>
+
+                
 
             </div>
             </v-card-title>
@@ -36,12 +56,6 @@
             <v-spacer></v-spacer>
             
             </v-card-actions>
-
-            <v-slide-y-transition>
-            <v-card-text v-show="show">
-                I'm a thing. But, like most politicians, he promised more than he could deliver. You won't have time for sleeping, soldier, not with all the bed making you'll be doing. Then we'll go with that data file! Hey, you add a one and two zeros to that or we walk! You're going to do his laundry? I've got to find a way to escape.
-            </v-card-text>
-            </v-slide-y-transition>
         </v-card>
       </v-flex>
       <v-flex
@@ -60,15 +74,25 @@
             >
           </v-avatar>
           <v-card-text class="text-xs-center">
-            <h6 class="category text-gray font-weight-thin mb-3">CLIENTE</h6>
-            <h4 class="card-title font-weight-light">Nombre Cliente</h4>
-            <p class="card-description font-weight-light">Empresa Cliente</p>
-            <p class="card-description font-weight-light">Nº de Proyectos</p>
+            <h4 class="font-weight text-capitalize">Guillermito Campos</h4>
+            <p class="font-weight text-capitalize">Empresa: Rollers Inc</p>
+            <p class="font-weight text-capitalize">Nº de Proyectos: 5</p>
             <v-btn
-              color="success"
               round
-              class="font-weight-light"
+              class="font-light buttonClient"
             >Ver Cliente</v-btn>
+          </v-card-text>
+        </material-card>
+
+        <material-card class="v-card-profile">
+          <v-card-text class="text-xs-center">
+            <h4 class="font-weight text-capitalize">Archivos asociados:</h4>
+            <img class="img-pdf" src="@/assets/img_119919.png" alt="">
+            <br>
+            <v-btn
+              round
+              class="font-light buttonClient"
+            >Descargar</v-btn>
           </v-card-text>
         </material-card>
       </v-flex>
@@ -128,6 +152,29 @@ export default {
 
 .v-card-profile{
   margin-top: 0px !important;
+}
+
+.icon-label{
+  color: #01acac !important;
+}
+.text-capitalize{
+  font-size: 150% !important;
+  color: grey !important;
+  margin-left: 3% !important;
+}
+.grey--text{
+  font-size: 110% !important;
+}
+.buttonClient{
+  background-color: #01acac !important;
+  color: white !important;
+}
+.buttonClient:hover{
+  background-color:white !important;
+  color: #01acac  !important;
+}
+.img-pdf{
+  max-width: 30% !important;
 }
 
 
