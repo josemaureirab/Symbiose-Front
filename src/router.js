@@ -71,6 +71,12 @@ export default new Router({
       path: '/checkin_create/:id',
       name: 'checkin_create',
       component: () => import('@/views/checkin/create.vue')
-    },     
+    },
+    {
+      path: '/proposal_detail/:id',
+      name: 'proposal_detail',
+      component: () => import('@/views/proposal/proposal_detail.vue')
+    },
+    
   ]
 })

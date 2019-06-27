@@ -21,6 +21,8 @@ export default new Vuex.Store({
     /* General Stuffs */
     serverURL: 'http://localhost:9000',
     proposalList: [],
+    proposalId: '',
+    proposal: {},
     loader: false,
     /* Template Stuffs */
     clipped: false,
@@ -336,6 +338,9 @@ export default new Vuex.Store({
     updateShowAddGuest(state, payload) {
       state.showAddGuest = payload
     },
+    updateProposalId(state, payload) {
+      state.proposalId = payload
+    }
   },
   actions: {
     async getAllProposals() {
@@ -355,6 +360,25 @@ export default new Vuex.Store({
           })
           .catch(e => {
             console.log(e.response)
+          })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async getProposal() {
+      try {
+        await axios
+          .get(this.state.serverURL + `/proposals/${this.state.proposalId}`)
+          .then(response => {
+            var proposal = response.data;
+            if (proposal.length != 0) {
+              this.state.proposal = proposal
+            } else {
+              console.log('No hay productos o no se puede acceder a ellos');
+            }
+          })
+          .catch(e => {
+            console.log(e.response);
           })
       } catch (error) {
         console.log(error)
