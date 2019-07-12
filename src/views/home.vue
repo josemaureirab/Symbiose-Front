@@ -1,7 +1,6 @@
 <template>
   <div id="home">
-    <vueDropzone id="dropzone" name="" :options ="dropzoneOptions"/>
-    <v-btn color="success" @click="handleFileUpload()">Subir</v-btn>
+    <vueDropzone id="dropzone" :options ="dropzoneOptions"/>
     <v-container grid-list-md text-xs-center>
       <v-layout row wrap>
         <v-flex v-for="proposal in proposalList" :key="proposal.id" sm12 xs12 lg4>
@@ -13,6 +12,7 @@
 </template>
 
 <script>
+import axios from 'axios'
 import { mapState, mapMutations, mapActions } from "vuex";
 import Proposals from '@/components/home/proposals'
 import vue2Dropzone from 'vue2-dropzone'
@@ -33,6 +33,7 @@ export default {
           maxFilesize: 256,
         //   headers: { "My-Awesome-Header": "header value" },
           acceptedFiles: ".pdf",
+          parallelUploads: 1
           //renameFile: proposal._id
       }
     }
@@ -42,8 +43,21 @@ export default {
   },
   mounted() {
     var dropzoneVue = document.getElementById("dropzone").dropzone;
-    dropzoneVue.on("addedfiles", function(files) {
-      console.log(files);
+    dropzoneVue.on("success", function(file) {
+      let formData = new FormData();
+      formData.append('file', file);
+      //console.log(file.name)
+      formData.append('name', file.name);
+      console.log(formData);
+      axios
+      .post('http://localhost:9000/' + 'upload/', formData)
+      .then(response => {
+        console.log(response)
+      })
+      .catch(e => {
+        console.log(e)
+        console.log(e.response)
+      })
     });
   },
   computed: {
