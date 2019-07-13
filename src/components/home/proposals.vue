@@ -12,13 +12,13 @@
 
         <v-card-title primary-title>
         <div>
-            <div class="headline">{{proposals.name}}</div>
-            <span class="grey--text">{{proposals._id}}</span>
+            <div class="headline">{{proposal.name}}</div>
+            <span class="grey--text">{{proposal._id}}</span>
         </div>
         </v-card-title>
 
         <v-card-actions>
-        <v-btn flat :to="{name: 'proposal_detail', params: {id: proposals._id}}">Ingresar</v-btn>
+        <v-btn flat :to="{name: 'proposal_detail', params: {proposal: proposal, id: proposal.idStr}}">Ingresar</v-btn>
         <v-btn flat color="blue">Editar</v-btn>
         <v-spacer></v-spacer>
         <v-btn icon @click="show = !show">
@@ -40,7 +40,7 @@ import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
   props: [
-    "proposals"
+    "proposal"
   ],
   data: () => ({
       show: false

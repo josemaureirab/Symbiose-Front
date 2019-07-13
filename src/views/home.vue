@@ -2,8 +2,8 @@
   <div id="home">
     <v-container grid-list-md text-xs-center>
       <v-layout row wrap>
-        <v-flex v-for="proposal in proposalList" :key="proposal.id" sm12 xs12 lg4>
-          <home-proposals :proposals="proposal"/>
+        <v-flex v-for="propo in proposalList" :key="propo.idStr" sm12 xs12 lg4>
+          <home-proposals :proposal="propo"/>
         </v-flex>
       </v-layout>
     </v-container>

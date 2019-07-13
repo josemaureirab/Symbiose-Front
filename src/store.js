@@ -21,7 +21,7 @@ export default new Vuex.Store({
     /* General Stuffs */
     serverURL: 'http://localhost:9000',
     proposalList: [],
-    proposalId: '',
+    proposalId: {},
     proposal: {},
     loader: false,
     /* Template Stuffs */

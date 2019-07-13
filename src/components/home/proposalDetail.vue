@@ -22,7 +22,7 @@
 
             <v-card-title primary-title>
             <div>
-                <div class="headline font-weight-black text-uppercase">{{ proposalId }}</div>
+                <div class="headline font-weight-black text-uppercase">{{ proposal }}</div>
                 <br>
                 <span class="grey--text">I'm a thing. But, like most politicians, he promised more than he could deliver. You won't have time for sleeping, soldier, not with all the bed making you'll be doing. Then we'll go with that data file! Hey, you add a one and two zeros to that or we walk! You're going to do his laundry? I've got to find a way to escape.
 
@@ -138,15 +138,18 @@ export default {
   },
   created() {
     this.proposalId = this.$route.params.id;
+    //this.proposal = this.$route.params;
     this.getProposal();
+    //console.log("created");
+    //console.log(this.proposalId)
   },
   mounted() {
-    console.log("Este sirve")
-    console.log(this.$route.params.id);
-    var propo = this.$route.params.id;
-    console.log("proposal")
-    console.log(propo);
-    var id = this.$route.params.id
+    //console.log("Este sirve")
+    //console.log(this.$route.params.id);
+    var propo = this.proposalId;
+    //console.log("proposal")
+    //console.log(propo);
+    //var id = this.$route.params.id
     //console.log("mounted")
     //console.log(this.$route)
     var dropzoneVue = document.getElementById("dropzone").dropzone;
@@ -154,8 +157,8 @@ export default {
       let formData = new FormData();
       formData.append('file', file);
       formData.append('proposal', propo);
-      console.log("form data")
-      console.log(formData);
+      //console.log("form data")
+      //console.log(formData);
       axios
       .post('http://localhost:9000/' + 'upload/', formData)
       .then(response => {
