@@ -22,7 +22,7 @@
 
             <v-card-title primary-title>
             <div>
-                <div class="headline font-weight-black text-uppercase">{{ proposal.name }}</div>
+                <div class="headline font-weight-black text-uppercase">{{ proposalId }}</div>
                 <br>
                 <span class="grey--text">I'm a thing. But, like most politicians, he promised more than he could deliver. You won't have time for sleeping, soldier, not with all the bed making you'll be doing. Then we'll go with that data file! Hey, you add a one and two zeros to that or we walk! You're going to do his laundry? I've got to find a way to escape.
 
@@ -44,6 +44,7 @@
                 <v-icon class="icon-label" >label</v-icon>
                 <span class="font-weight text-capitalize">Presupuesto asociado: R$1000</span>
                 <br>
+                <vueDropzone id="dropzone" :options ="dropzoneOptions"/>
 
                 
 
@@ -110,21 +111,61 @@ import axios from 'axios';
 import router from '@/router';
 import { mapState, mapActions } from 'vuex';
 import MaterialCard from '@/components/home/material/card.vue'
+import vue2Dropzone from 'vue2-dropzone'
+import 'vue2-dropzone/dist/vue2Dropzone.min.css'
 
 export default {
   name: 'user-profile',
   data () {
     return {
       dateCreation: "12/12/2018",
-      dateLimit: "12/07/2019"
+      dateLimit: "12/07/2019",
+      proposals: [],
+      dropzoneOptions: {
+          url: 'https://httpbin.org/post',
+          thumbnailWidth: 150,
+          maxFilesize: 256,
+        //   headers: { "My-Awesome-Header": "header value" },
+          acceptedFiles: ".pdf",
+          parallelUploads: 1
+          //renameFile: proposal._id
+      }
     }
   },
   components: {
-    'material-card': MaterialCard
+    'material-card': MaterialCard,
+    vueDropzone: vue2Dropzone
   },
   created() {
-    this.proposalId = this.$route.params.id
-    this.getProposal()
+    this.proposalId = this.$route.params.id;
+    this.getProposal();
+  },
+  mounted() {
+    console.log("Este sirve")
+    console.log(this.$route.params.id);
+    var propo = this.$route.params.id;
+    console.log("proposal")
+    console.log(propo);
+    var id = this.$route.params.id
+    //console.log("mounted")
+    //console.log(this.$route)
+    var dropzoneVue = document.getElementById("dropzone").dropzone;
+    dropzoneVue.on("success", function(file) {
+      let formData = new FormData();
+      formData.append('file', file);
+      formData.append('proposal', propo);
+      console.log("form data")
+      console.log(formData);
+      axios
+      .post('http://localhost:9000/' + 'upload/', formData)
+      .then(response => {
+        console.log(response)
+      })
+      .catch(e => {
+        console.log(e)
+        console.log(e.response)
+      })
+     });
   },
   methods: {
     ...mapActions([

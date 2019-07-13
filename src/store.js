@@ -348,12 +348,13 @@ export default new Vuex.Store({
         await axios
           .get(this.state.serverURL + '/proposals/')
           .then(response => {
-            console.log(response)
-            console.log(response.data)
+            //console.log(response)
+            //console.log(response.data)
             const proposals = response.data
             if (proposals.length != 0) {
               this.state.proposalList = proposals
-              console.log(this.state.proposalList)
+              var proplist = this.state.proposalList;
+              //console.log(proplist)
             } else {
               console.log('No se han encontrado propuestas')
             }
@@ -378,7 +379,7 @@ export default new Vuex.Store({
             }
           })
           .catch(e => {
-            console.log(e.response);
+            //console.log(e.response);
           })
       } catch (error) {
         console.log(error)
