@@ -1,6 +1,5 @@
 <template>
   <div id="home">
-    <vueDropzone id="dropzone" :options ="dropzoneOptions"/>
     <v-container grid-list-md text-xs-center>
       <v-layout row wrap>
         <v-flex v-for="proposal in proposalList" :key="proposal.id" sm12 xs12 lg4>
@@ -40,25 +39,6 @@ export default {
   },
   created() {
     this.getAllProposals()
-  },
-  mounted() {
-    var dropzoneVue = document.getElementById("dropzone").dropzone;
-    dropzoneVue.on("success", function(file) {
-      let formData = new FormData();
-      formData.append('file', file);
-      //console.log(file.name)
-      formData.append('name', file.name);
-      console.log(formData);
-      axios
-      .post('http://localhost:9000/' + 'upload/', formData)
-      .then(response => {
-        console.log(response)
-      })
-      .catch(e => {
-        console.log(e)
-        console.log(e.response)
-      })
-    });
   },
   computed: {
     ...mapState(["proposalList"]),
