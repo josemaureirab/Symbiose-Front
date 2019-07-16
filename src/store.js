@@ -21,7 +21,9 @@ export default new Vuex.Store({
     /* General Stuffs */
     serverURL: 'http://localhost:9000',
     proposalList: [],
+    clientsList: [],
     proposalId: {},
+    proposalIdStr: "",
     proposal: {},
     loader: false,
     /* Template Stuffs */
@@ -30,160 +32,18 @@ export default new Vuex.Store({
     fixed: false,
     drawerItems: [
       {icon: 'mdi-clipboard-outline', title: 'Propuestas', to: '/' },
-      { icon: 'mdi-account', title: 'Usuarios', to: '/rooms' },
-      { icon: 'mdi-view-dashboard', title: 'Estádisticas', to: '/guests' },
+      { icon: 'mdi-account', title: 'Usuarios', to: '/users' },
+      { icon: 'fas fa-mug-hot', title: 'Clientes', to: '/clients' },
+      { icon: 'fas fa-plus-square', title: 'Agregar Propuesta', to: '/createProposal' },
       /* { icon: 'fas fa-check-double', title: 'Check-out', to: '/checkout'},
       { icon: 'fas fa-check', title: 'Check-in', to: '/checkin' },
       { icon: 'mdi-clipboard-outline', title: 'Reservas', to: '/reservations' } */
-    ],
-    notebooks: [
-      {
-        name: 'Set Mug Posavasos Gryffindor – Harry Potter',
-        price: 16990,
-        image: 'https://i0.wp.com/www.mymstore.cl/wp-content/uploads/2019/02/PicsArt_02-21-12.03.08.jpg?resize=250%2C250',
-        stars: 5,
-        totalReviews: 230,
-        details: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s'
-      },
-      {
-        name: 'Pop Sirius Black Dog #73 – Harry Potter',
-        price: 10990,
-        image: 'https://i1.wp.com/www.mymstore.cl/wp-content/uploads/2019/02/PicsArt_02-20-11.53.04.jpg?resize=250%2C250',
-        stars: 1,
-        totalReviews: 1,
-        details: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s'
-      },
-      {
-        name: 'Pop Orion #394 – Summoners War',
-        price: 10990,
-        image: 'https://i2.wp.com/www.mymstore.cl/wp-content/uploads/2019/02/PicsArt_02-20-11.48.39.jpg?resize=250%2C250',
-        stars: 4,
-        totalReviews: 340,
-        details: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s'
-      },
-      {
-        name: 'Pop Voldemort #6 – Harry Potter',
-        price: 10990,
-        image: 'https://i2.wp.com/www.mymstore.cl/wp-content/uploads/2018/11/PicsArt_11-27-06.59.31.jpg?resize=250%2C250',
-        stars: 3,
-        totalReviews: 30,
-        details: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s'
-      },
-      {
-        name: 'Notebook Lenovo Ideapad 320 Intel® Core i5-7200u 8GB',
-        price: 2259,
-        image: 'https://images-americanas.b2w.io/produtos/01/00/item/132381/3/132381386G1.png',
-        stars: 5,
-        totalReviews: 230,
-        details: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s'
-      },
-      {
-        name: 'Notebook Dell Alienware - i7 16GB',
-        price: 14000,
-        image: 'https://images-submarino.b2w.io/produtos/01/00/sku/34470/9/34470934G1.jpg',
-        stars: 2,
-        totalReviews: 248,
-        details: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s'
-      },
-      {
-        name: 'Smartphone Xiaomi Mi A1 dual Android one 7.1',
-        price: 1199,
-        image: 'https://images-americanas.b2w.io/produtos/01/00/sku/29296/2/29296259G1.jpg',
-        stars: 0,
-        totalReviews: 0,
-        details: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s'
-      },
-      {
-        name: 'Smartphone Moto G 5S Dual Chip Android 7.0',
-        price: 929,
-        image: 'https://images-americanas.b2w.io/produtos/01/00/item/132474/0/132474081G1.png',
-        stars: 1,
-        totalReviews: 11,
-        details: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s'
-      },
-      {
-        name: 'iPhone 8 Dourado 64GB Tela 4.7" IOS 11',
-        price: 3949,
-        image: 'https://images-americanas.b2w.io/produtos/01/00/item/132651/7/132651745G1.jpg',
-        stars: 1,
-        totalReviews: 2,
-        details: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s'
-      },
-      {
-        name: 'Smartphone Samsung Galaxy S7 Edge',
-        price: 1943,
-        image: 'https://images-americanas.b2w.io/produtos/01/00/item/125911/8/125911828G1.png',
-        stars: 5,
-        totalReviews: 310,
-        details: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s'
-      },
-      {
-        name: 'Smartphone Motorola Moto G6 Plus',
-        price: 1699,
-        image: 'https://images-americanas.b2w.io/produtos/01/00/item/133453/1/133453185G1.jpg',
-        stars: 2,
-        totalReviews: 42,
-        details: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s'
-      },
-      {
-        name: 'Smartphone Motorola Moto Z3 Play',
-        price: 2999,
-        image: 'https://images-submarino.b2w.io/produtos/01/00/item/133666/1/133666164G1.jpg',
-        stars: 0,
-        totalReviews: 1,
-        details: 'Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industrys standard dummy text ever since the 1500s'
-      }
     ],
     miniVariant: false,
     right: true,
     rightDrawer: false,
     title: 'Administrador de propuestas - Project Hunter',
-    sidebarBackgroundColor: 'rgba(27, 27, 27, 0.74)',
-    /* Guests Stuffs */
-    guests: [],
-    guest: {},
-    guestId: '',
-    storeGuestSuccess: false,
-    updateGuestSuccess: false,
-    deleteGuestSuccess: false,
-    storeGuestError: false,
-    updateGuestError: false,
-    deleteGuestError: false,
-    /* Reservations Stuffs */
-    reservations: [],
-    reservation: {},
-    clientSelect: false,
-    /* Reserved Room Stuffs */
-    reservationId: '',
-    reservedRoomId: '',
-    reservedRoom: {},
-    reservedRooms: [],
-    reservedRoomIndicator: false,
-    searchReservedRoom: '',
-    /* Room Stuffs */
-    type: '',
-    minPrice: '',
-    maxPrice: '',
-    rooms: [],
-    room: {},
-    roomId: '',
-    filtredRooms: [],
-    itemsSmoke: [
-      'Sí',
-      'No'
-    ],
-    itemsType: [
-      'Simple',
-      'Doble',
-      'Triple',
-      'Matrimonial',
-      'Presidencial'
-    ],
-    /* Checkin */
-    showAddGuest: false,
-    readonly: true,
-    expand: true,
-    panel: [ true ]
+    sidebarBackgroundColor: 'rgba(27, 27, 27, 0.74)'
 	},
   mutations: {
     setPagination (state, payload) {
@@ -255,89 +115,6 @@ export default new Vuex.Store({
     updateDeleteGuestError (state, payload) {
       state.deleteGuestError = payload
     },
-    /* Reservation Stuffs */
-    updateClientSelect (state, payload) {
-      state.clientSelect = payload
-    },
-    updateReservationId (state, payload) {
-      state.reservationId = payload
-    },
-    updateReservations (state, payload) {
-      state.reservations = payload
-    },
-    updateReservation (state, payload) {
-      state.reservation = payload
-    },
-    /* Reservation Room Stuffs */
-    updateType (state, payload) {
-      state.type = payload
-    },
-    updateMinPrice (state, payload) {
-      state.minPrice = payload
-    },
-    updateMaxPrice (state, payload) {
-      state.maxPrice = payload
-    },
-    updateDateIni (state, payload) {
-      state.dateIni = payload
-    },
-    updateDateOut (state, payload) {
-      state.dateOut = payload
-    },
-    updateNumber (state, payload) {
-      state.number = payload
-    },
-    updateStatus (state, payload) {
-      state.status = payload
-    },
-    updateRoom (state, payload) {
-      state.room = payload
-    },
-    updateRoomId(state, payload) {
-      state.roomId = payload
-    },
-    updateReservedRoomId (state, payload) {
-      state.reservedRoomId = payload
-    },
-    /* Encryption */
-    encryptReservedRoomId (state, payload) {
-      state.reservedRoomId = cryptr.encrypt(payload)
-    },
-    decryptReservedRoomId (state, payload) {
-      state.reservedRoomId = cryptr.decrypt(payload)
-    },
-    /* End Encryption */
-    updateReservedRoom (state, payload) {
-      state.reservedRoom = payload
-    },
-    updateReservedRooms (state, payload) {
-      state.reservedRooms = payload
-    },
-    updateSearchReservedRoom (state, payload) {
-      state.searchReservedRoom = payload
-    },
-    updateReservedRoomIndicator (state, payload) {
-      state.reservedRoomIndicator = payload
-    },
-    /* Check-in */
-    updateCollapsePanel (state, payload) {
-      state.showAddGuest = !payload
-      state.readonly = payload
-      state.expand = payload
-      state.panel = [ payload ]
-    },
-    updateExpand (state, payload) {
-      state.expand = payload
-    },
-    updatePanel (state, payload) {
-      state.panel = payload
-    },
-    updateReadonly(state, payload) {
-      state.readonly = payload
-    },
-    updateShowAddGuest(state, payload) {
-      state.showAddGuest = payload
-    },
     updateProposalId(state, payload) {
       state.proposalId = payload
     }
@@ -358,6 +135,45 @@ export default new Vuex.Store({
             } else {
               console.log('No se han encontrado propuestas')
             }
+          })
+          .catch(e => {
+            console.log(e.response)
+          })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async getAllClients() {
+      try {
+        await axios
+          .get(this.state.serverURL + '/clients/')
+          .then(response => {
+            //console.log(response)
+            //console.log(response.data)
+            const clients = response.data
+            if (clients.length != 0) {
+              this.state.clientsList = clients
+              var clientList = this.state.clientsList;
+              //console.log(clientList)
+            } else {
+              console.log('No se han encontrado clientes')
+            }
+          })
+          .catch(e => {
+            console.log(e.response)
+          })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+      async createProposal() {
+      try {
+        await axios
+          .get(this.state.serverURL + '/proposals/create')
+          .then(response => {
+            console.log("idSTR")
+            console.log(response.data)
+              this.state.proposalIdStr = response.data
           })
           .catch(e => {
             console.log(e.response)

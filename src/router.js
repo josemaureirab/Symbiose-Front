@@ -11,72 +11,37 @@ export default new Router({
       path: '/',
       name: 'home',
       component: () => import('@/views/home.vue')
-    },
-    /* rooms */
+    },  
+    /* clients */
     {
-      path: '/rooms',
-      name: 'rooms',
-      component: () => import('@/views/room/roomIndex.vue')
-    },
-    {
-      path: '/rooms_edit/:id',
-      name: 'rooms_edit',
-      component: () => import('@/views/room/roomEdit.vue')
-    },     
-    /* guests */
-    {
-      path: '/guests',
-      name: 'guests',
-      component: () => import('@/views/guest/index.vue')
+      path: '/clients',
+      name: 'clients',
+      component: () => import('@/views/clients/index.vue')
     },
     {
-      path: '/guests_edit/:id',
-      name: 'guests_edit',
-      component: () => import('@/views/guest/edit.vue')
-    },
-    /* reservations */        
-    {
-      path: '/reservations',
-      name: 'reservations',
-      component: () => import('@/views/reservation/index.vue')
-    }, 
-    // {
-    //   path: '/reservations_add',
-    //   name: 'reservations_add',
-    //   component: () => import('@/views/reservation/reservationRoom.vue')
-    // },
-    {
-      path: '/reservations_edit/:id',
-      name: 'reservations_edit',
-      component: () => import('@/views/reservation/edit.vue')
-    },
-    {
-      path: '/reservations_room/:id',
-      name: 'reservations_room',
-      component: () => import('@/views/reservation/room.vue')
-    },
-    {
-      path: '/checkout',
-      name: 'checkout',
-      component: () => import('@/views/checkout/index.vue')
-    },
-         
-    /* check-in */
-    {
-      path: '/checkin',
-      name: 'checkin',
-      component: () => import('@/views/checkin/index.vue')
-    }, 
-    {
-      path: '/checkin_create/:id',
-      name: 'checkin_create',
-      component: () => import('@/views/checkin/create.vue')
+      path: '/clients_edit/:id',
+      name: 'clients_edit',
+      component: () => import('@/views/clients/edit.vue')
     },
     {
       path: '/proposal_detail/:id',
       name: 'proposal_detail',
       component: () => import('@/views/proposal/proposal_detail.vue')
     },
-    
+    {
+      path: '/proposal_edit/:id',
+      name: 'proposal_edit',
+      component: () => import('@/views/proposal/proposal_edit.vue')
+    },
+    {
+      path: '/createProposal',
+      name: 'proposal_create',
+      component: () => import('@/views/proposal/proposal_create.vue')
+    },
+    {
+      path: '/addFiles',
+      name: 'proposal_files',
+      component: () => import('@/views/proposal/proposal_files.vue')
+    }
   ]
 })

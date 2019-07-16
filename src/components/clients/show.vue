@@ -28,28 +28,28 @@ import router from '@/router'
 import { mapActions, mapState } from 'vuex';
 
 export default {
-  name: 'guest-show',
-  props: ['guests'],
+  name: 'client-show',
+  props: ['clients'],
   data () {
     return {
 
     }
 	},
-	methods: {
-    ...mapActions([
-      'deleteGuest',
-    ]),
-    toUpdate(payload) {
-      this.$store.commit('encryptGuestId', payload)
-      router.push({ name: 'guests_edit', params: { id: this.guestId } })
-    }
-	},
-  computed: {
-    ...mapState([
-      'serverURL',
-      'guestId',
-      'loader'
-    ]),
-  }	
+	// methods: {
+  //   ...mapActions([
+  //     'deleteGuest',
+  //   ]),
+  //   toUpdate(payload) {
+  //     this.$store.commit('encryptGuestId', payload)
+  //     router.push({ name: 'guests_edit', params: { id: this.guestId } })
+  //   }
+	// },
+  // computed: {
+  //   ...mapState([
+  //     'serverURL',
+  //     'guestId',
+  //     'loader'
+  //   ]),
+  // }	
 }
 </script>

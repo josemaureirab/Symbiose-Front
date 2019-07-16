@@ -13,13 +13,13 @@
         <v-card-title primary-title>
         <div>
             <div class="headline">{{proposal.name}}</div>
-            <span class="grey--text">{{proposal._id}}</span>
+            <span class="grey--text">{{proposal.description}}</span>
         </div>
         </v-card-title>
 
         <v-card-actions>
         <v-btn flat :to="{name: 'proposal_detail', params: {proposal: proposal, id: proposal.idStr}}">Ingresar</v-btn>
-        <v-btn flat color="blue">Editar</v-btn>
+        <v-btn flat color="blue" :to="{name: 'proposal_edit', params: {description: proposal.description, id: proposal.idStr, name: proposal.name}}">Editar</v-btn>
         <v-spacer></v-spacer>
         <v-btn icon @click="show = !show">
             <v-icon>{{ show ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>

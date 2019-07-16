@@ -24,26 +24,36 @@
             <div>
                 <div class="headline font-weight-black text-uppercase">{{ proposal }}</div>
                 <br>
-                <span class="grey--text">I'm a thing. But, like most politicians, he promised more than he could deliver. You won't have time for sleeping, soldier, not with all the bed making you'll be doing. Then we'll go with that data file! Hey, you add a one and two zeros to that or we walk! You're going to do his laundry? I've got to find a way to escape.
-
-                </span>
-                <br>
-                <br>
-                <v-icon class="icon-label" >label</v-icon>
-                <span class="font-weight text-capitalize">Fecha de creación: {{ dateCreation }}</span>
-                <br>
-                <br>
-                <v-icon class="icon-label" >label</v-icon>
-                <span class="font-weight text-capitalize">Fecha límite: {{ dateLimit }}</span>
-                <br>
-                <br>
-                <v-icon class="icon-label" >label</v-icon>
-                <span class="font-weight text-capitalize">Creador: Guillermito Campos</span>
-                <br>
-                <br>
-                <v-icon class="icon-label" >label</v-icon>
-                <span class="font-weight text-capitalize">Presupuesto asociado: R$1000</span>
-                <br>
+                <v-flex xs6>
+                <v-textarea
+                  name="nombre"
+                  label="Nombre"
+                  v-model=proposalName
+                ></v-textarea>
+              </v-flex>
+              <v-flex xs6>
+                <v-textarea
+                  name="descripción"
+                  label="Descripción"
+                  v-model=proposalDesc
+                ></v-textarea>
+              </v-flex>
+              <v-flex xs6>
+                <v-textarea
+                  name="cliente"
+                  label="Cliente"
+                  value=""
+                ></v-textarea>
+              </v-flex>
+              <v-flex xs6>
+                <v-textarea
+                  name="archivos"
+                  label="Archivos"
+                  value=""
+                ></v-textarea>
+              </v-flex>
+              <v-btn color="success" @click="actualizarPropuesta()">Actualizar</v-btn>
+              <v-btn color="error" @click="eliminarPropuesta()">Eliminar</v-btn>
                 <vueDropzone id="dropzone" :options ="dropzoneOptions"/>
 
                 
@@ -120,15 +130,20 @@ export default {
     return {
       dateCreation: "12/12/2018",
       dateLimit: "12/07/2019",
-      proposals: [],
+      proposalName: "",
+      proposalDesc: "",
+      proposalIdStr: "",
+      //proposal: "",
+      //proposalDesc: this.proposal.description,
       dropzoneOptions: {
           url: 'https://httpbin.org/post',
           thumbnailWidth: 150,
           maxFilesize: 256,
         //   headers: { "My-Awesome-Header": "header value" },
           acceptedFiles: ".pdf",
-          parallelUploads: 1
+          parallelUploads: 1,
           //renameFile: proposal._id
+          phone: undefined,
       }
     }
   },
@@ -138,27 +153,22 @@ export default {
   },
   created() {
     this.proposalId = this.$route.params.id;
-    //this.proposal = this.$route.params;
     this.getProposal();
-    //console.log("created");
-    //console.log(this.proposalId)
+    //this.proposalName = this.$route.params.proposal;
+    //console.log(this.getProposal())
   },
   mounted() {
-    //console.log("Este sirve")
-    //console.log(this.$route.params.id);
+    //console.log(this);
     var propo = this.proposalId;
-    //console.log("proposal")
-    //console.log(propo);
-    //var id = this.$route.params.id
-    //console.log("mounted")
-    //console.log(this.$route)
     var dropzoneVue = document.getElementById("dropzone").dropzone;
+    this.proposalName = this.$route.params.name;
+    this.proposalDesc = this.$route.params.description;
+    this.proposalIdStr = propo;
+    console.log(this.proposal)
     dropzoneVue.on("success", function(file) {
       let formData = new FormData();
       formData.append('file', file);
-      formData.append('proposal', propo);
-      //console.log("form data")
-      //console.log(formData);
+      formData.append('proposalId', propo);
       axios
       .post('http://localhost:9000/' + 'upload/', formData)
       .then(response => {
@@ -173,7 +183,35 @@ export default {
   methods: {
     ...mapActions([
       'getProposal'
-    ])
+    ]),
+    actualizarPropuesta(){
+      //console.log(this.proposalName)
+      let formData = new FormData();
+      formData.append('proposalId', this.proposalIdStr);
+      formData.append('name', this.proposalName);
+      formData.append('description', this.proposalDesc);
+      //formData.append('description', "probando el cambio");
+      axios
+      .put('http://localhost:9000/' + 'proposals/', formData)
+      .then(response => {
+        console.log(response)
+      })
+      .catch(e => {
+        console.log(e)
+        console.log(e.response)
+      })
+    },
+    eliminarPropuesta(){
+      axios
+      .delete('http://localhost:9000/' + 'proposals/' + this.proposalId)
+      .then(response => {
+        console.log(response)
+      })
+      .catch(e => {
+        console.log(e)
+        console.log(e.response)
+      })
+    }
   },
   computed: {
     ...mapState([
