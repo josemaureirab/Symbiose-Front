@@ -53,6 +53,7 @@
               </v-flex>
               <v-btn flat color="blue" :to="{name: 'proposal_files'}">Añadir archivos</v-btn>
               <v-btn color="error" @click="llevarAtras()">Cancelar</v-btn>
+              <v-btn color="primary" @click="generar()">Descargar propuesta pdf</v-btn>
             </div>
             </v-card-title>
             <v-card-actions>
@@ -130,6 +131,17 @@ export default {
     eliminarPropuesta(){
       axios
       .delete('http://localhost:9000/' + 'proposals/' + this.proposalId)
+      .then(response => {
+        console.log(response)
+      })
+      .catch(e => {
+        console.log(e)
+        console.log(e.response)
+      })
+    },
+    generar(){
+      axios
+      .get('http://localhost:9000' + '/pdfreport/'+this.proposalIdStr)
       .then(response => {
         console.log(response)
       })
