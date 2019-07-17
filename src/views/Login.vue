@@ -20,8 +20,8 @@
               </v-toolbar>
               <v-card-text>
                 <v-form>
-                  <v-text-field prepend-icon="person" name="login" label="Login" type="text"></v-text-field>
-                  <v-text-field prepend-icon="lock" name="password" label="Password" id="password" type="password"></v-text-field>
+                  <v-text-field prepend-icon="person" name="login" label="Login" type="text" v-model=userName></v-text-field>
+                  <v-text-field prepend-icon="lock" name="password" label="Password" id="password" type="password" v-model=userPass></v-text-field>
                 </v-form>
               </v-card-text>
               <v-card-actions>
@@ -42,8 +42,10 @@
 import axios from 'axios';
 import router from '@/router';
 import { mapState, mapActions } from 'vuex'
+import { Script } from 'vm';
 
 export default {
+  name: "login",
   data () {
     return {
       userName: "",
@@ -51,18 +53,18 @@ export default {
     }
   },
   created() {
-    console.log("create")
-    console.log(this)
     this.userName = "",
     this.userPass = ""
   },
   methods: {
     logear(){
       let formData = new FormData();
-      formData.append('name', this.userName);
+      formData.append('user', this.userName);
       formData.append('pass', this.userPass);
+      console.log(this.userName)
+      console.log(this.userPass)
       axios
-      .put('http://localhost:9000/' + 'users/', formData)
+      .put('http://localhost:9000/' + 'users/login', formData)
       .then(response => {
         console.log(response)
       })
@@ -73,3 +75,4 @@ export default {
     }
   }
 }
+</script>

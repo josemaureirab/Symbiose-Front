@@ -92,6 +92,8 @@
           />
                </v-list-tile>
             <br>
+            <v-btn color="primary" @click="generar()">Descargar propuesta pdf</v-btn>
+            <v-btn color="primary" @click="prueba()">Probar</v-btn>
           </v-card-text>
         </material-card>
       </v-flex>
@@ -116,6 +118,7 @@ export default {
     return {
       dateCreation: "12/12/2018",
       dateLimit: "12/07/2019",
+      arreglo: [1,2,3,4,5,6],
       dropzoneOptions: {
           url: 'https://httpbin.org/post',
           thumbnailWidth: 150,
@@ -144,8 +147,6 @@ export default {
     ]),
     forceFileDownload(url, name){
       const link = document.createElement('a')
-      //console.log(link)
-      //url = "../../../../" + url
       console.log(url)
       link.href = url
 
@@ -169,7 +170,7 @@ export default {
     },
     descargar(file){
       let formData = new FormData();
-      formData.append('proposalId', this.proposalIdStr);
+      formData.append('proposalId', this.proposalId);
       formData.append('fileName', file);
       axios
       .post('http://localhost:9000' + '/upload/getfile', formData)
@@ -178,6 +179,39 @@ export default {
         this.forceFileDownload(response.data, file)
       })
       .catch(() => console.log('No se encontro el archivo'))
+    },
+    generar(){
+      let formData = new FormData();
+      formData.append('proposalId', this.proposalId);
+      axios
+      .post('http://localhost:9000' + '/pdfreport/', formData)
+      .then(response => {
+        console.log(response)
+      })
+      .catch(e => {
+        console.log(e)
+        console.log(e.response)
+      })
+      const link = document.createElement('b')
+      link.href = "/static/" + "generatedPdf_" + this.proposalId + ".pdf";
+      console.log(link.href)
+      link.setAttribute('download', name)
+      console.log(link)
+      document.body.appendChild(link)
+      link.click()
+    },
+    prueba(){
+      let formData = new FormData();
+      formData.append('array', this.arreglo);
+      axios
+      .post('http://localhost:9000' + '/pdfreport/test', formData)
+      .then(response => {
+        console.log(response)
+      })
+      .catch(e => {
+        console.log(e)
+        console.log(e.response)
+      })
     }
   },
   computed: {
