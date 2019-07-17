@@ -144,21 +144,19 @@ export default {
     ...mapActions([
       'getProposal'
     ]),
-    forceFileDownload(url){
+    forceFileDownload(url, name){
       const link = document.createElement('a')
       //console.log(link)
       //url = "../../../../" + url
       console.log(url)
       link.href = url
-      link.setAttribute('download', 'file.pdf')
+
+      link.setAttribute('download', name)
       console.log(link)
       document.body.appendChild(link)
       link.click()
     },
     descargar(file){
-      //var path = require('path');
-      //var filename = path.basename('/Users/');
-      //console.log(filename);
       let formData = new FormData();
       formData.append('proposalId', this.proposalIdStr);
       formData.append('fileName', file);
@@ -166,7 +164,7 @@ export default {
       .post('http://localhost:9000' + '/upload/getfile', formData)
       .then(response => {
         console.log(response.data)
-        this.forceFileDownload(response.data)
+        this.forceFileDownload(response.data, file)
       })
       .catch(() => console.log('No se encontro el archivo'))
     }
