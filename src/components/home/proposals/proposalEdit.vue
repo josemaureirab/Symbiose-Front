@@ -42,6 +42,7 @@
                 <v-select
                   :items=this.proposal.files
                   label="Archivos"
+                  @click.native="doThis"
                   @change="ejemplo()"
                 ></v-select>
               </v-flex>
@@ -111,6 +112,7 @@ export default {
   name: 'user-profile',
   data () {
     return {
+      algo: "Hola",
       proposalName: "",
       proposalDesc: "",
       proposalIdStr: "",
@@ -147,6 +149,7 @@ export default {
     this.proposalIdStr = propo;
     this.getClient();
     var propoFresh = this.getProposal()
+
     dropzoneVue.on("success", function(file) {
       let formData = new FormData();
       formData.append('file', file);
@@ -169,6 +172,24 @@ export default {
     ...mapActions([
       'getProposal'
     ]),
+    doThis () {
+      this.actualizarPropuesta();
+    },
+    dropzone(file){
+      console.log(this.algo)
+      let formData = new FormData();
+      formData.append('file', file);
+      formData.append('proposalId', propo);
+      axios
+      .post('http://localhost:9000/' + 'upload/', formData)
+      .then(response => {
+        console.log(response)
+      })
+      .catch(e => {
+        console.log(e)
+        console.log(e.response)
+      })
+    },
     actualizarPropuesta(){
       let formData = new FormData();
       formData.append('proposalId', this.proposalIdStr);
