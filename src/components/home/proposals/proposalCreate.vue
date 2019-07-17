@@ -39,16 +39,16 @@
                 ></v-textarea>
               </v-flex>
               <v-flex xs6>
-                <!-- <v-flex v-for="client in clientsList" :key="client._id">
+                <v-flex v-for="client in clientsList" :key="client.idStr">
                 <v-textarea
                   name="cliente"
                   label="Cliente"
                   v-model=client.name
                 ></v-textarea>
-                </v-flex> -->
+                </v-flex>
                 <v-select
                   :items=nameClients
-                  label="Standard"
+                  label="Clientes"
                 ></v-select>
               </v-flex>
               <v-btn flat color="blue" :to="{name: 'proposal_files'}">Añadir archivos</v-btn>

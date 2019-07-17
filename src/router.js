@@ -11,18 +11,30 @@ export default new Router({
       path: '/',
       name: 'home',
       component: () => import('@/views/home.vue')
-    },  
-    /* clients */
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component: () => import('@/views/Login.vue')
+    },
+    //Clients
+    {
+      path: '/client',
+      name: 'client_detail',
+      component: () => import('@/views/clients/index.vue')
+    },
     {
       path: '/clients',
       name: 'clients',
-      component: () => import('@/views/clients/index.vue')
+      component: () => import('@/views/clients/clients.vue')
     },
     {
       path: '/clients_edit/:id',
       name: 'clients_edit',
       component: () => import('@/views/clients/edit.vue')
     },
+
+    //Proposals
     {
       path: '/proposal_detail/:id',
       name: 'proposal_detail',

@@ -39,37 +39,16 @@
                 ></v-textarea>
               </v-flex>
               <v-flex xs6>
-                <v-textarea
-                  name="cliente"
-                  label="Cliente"
-                  value=""
-                ></v-textarea>
-              </v-flex>
-              <v-flex xs6>
-                <v-textarea
-                  name="archivos"
+                <v-select
+                  :items=this.proposal.files
                   label="Archivos"
-                  value=""
-                ></v-textarea>
+                  @change="ejemplo()"
+                ></v-select>
               </v-flex>
               <v-btn color="success" @click="actualizarPropuesta()">Actualizar</v-btn>
               <v-btn color="error" @click="eliminarPropuesta()">Eliminar</v-btn>
                 <vueDropzone id="dropzone" :options ="dropzoneOptions"/>
-
-                
-
-            </div>
-            </v-card-title>
-              
-
-            <v-card-actions>
-            
-            <v-spacer></v-spacer>
-            
-            </v-card-actions>
-        </v-card>
-      </v-flex>
-      <v-flex
+              <v-flex
         xs12
         md4
         lg4
@@ -85,13 +64,12 @@
             >
           </v-avatar>
           <v-card-text class="text-xs-center">
-            <h4 class="font-weight text-capitalize">Guillermito Campos</h4>
-            <p class="font-weight text-capitalize">Empresa: Rollers Inc</p>
-            <p class="font-weight text-capitalize">Nº de Proyectos: 5</p>
-            <v-btn
-              round
-              class="font-light buttonClient"
-            >Ver Cliente</v-btn>
+            <h4 class="font-weight text-capitalize">{{client.name}}</h4>
+            <p class="font-weight text-capitalize">Empresa: {{client.company}}</p>
+            <p class="font-weight text-capitalize">Valoración: {{client.score}}</p>
+            <v-btn round class ="font-light buttonClient" :to="{name: 'client_detail', params: {client: client,  clientId: clientId}}">Ver Cliente</v-btn>
+            <v-btn color="success" @click="actualizarPropuesta()">Actualizar</v-btn>
+              <v-btn color="error" @click="eliminarPropuesta()">Eliminar</v-btn>
           </v-card-text>
         </material-card>
 
@@ -107,8 +85,13 @@
           </v-card-text>
         </material-card>
       </v-flex>
-      
-
+            </div>
+            </v-card-title>
+            <v-card-actions>
+            <v-spacer></v-spacer>
+            </v-card-actions>
+        </v-card>
+      </v-flex>
     </v-layout>
   </v-container>
 </template>
@@ -128,21 +111,17 @@ export default {
   name: 'user-profile',
   data () {
     return {
-      dateCreation: "12/12/2018",
-      dateLimit: "12/07/2019",
       proposalName: "",
       proposalDesc: "",
       proposalIdStr: "",
-      //proposal: "",
-      //proposalDesc: this.proposal.description,
+      clientId: "",
+      client: [],
       dropzoneOptions: {
           url: 'https://httpbin.org/post',
           thumbnailWidth: 150,
           maxFilesize: 256,
-        //   headers: { "My-Awesome-Header": "header value" },
           acceptedFiles: ".pdf",
           parallelUploads: 1,
-          //renameFile: proposal._id
           phone: undefined,
       }
     }
@@ -153,18 +132,21 @@ export default {
   },
   created() {
     this.proposalId = this.$route.params.id;
+  },
+  beforeMount(){
     this.getProposal();
-    //this.proposalName = this.$route.params.proposal;
-    //console.log(this.getProposal())
+    console.log("beforeMount")
+    console.log(this.getProposal())
   },
   mounted() {
-    //console.log(this);
     var propo = this.proposalId;
     var dropzoneVue = document.getElementById("dropzone").dropzone;
     this.proposalName = this.$route.params.name;
     this.proposalDesc = this.$route.params.description;
+    this.clientId = this.$route.params.clientId;
     this.proposalIdStr = propo;
-    console.log(this.proposal)
+    this.getClient();
+    var propoFresh = this.getProposal()
     dropzoneVue.on("success", function(file) {
       let formData = new FormData();
       formData.append('file', file);
@@ -180,20 +162,23 @@ export default {
       })
      });
   },
+  updated() {
+    //this.getClient();
+  },
   methods: {
     ...mapActions([
       'getProposal'
     ]),
     actualizarPropuesta(){
-      //console.log(this.proposalName)
       let formData = new FormData();
       formData.append('proposalId', this.proposalIdStr);
       formData.append('name', this.proposalName);
       formData.append('description', this.proposalDesc);
-      //formData.append('description', "probando el cambio");
       axios
       .put('http://localhost:9000/' + 'proposals/', formData)
       .then(response => {
+        this.proposalName = response.data.name
+        this.proposalDesc = response.data.description
         console.log(response)
       })
       .catch(e => {
@@ -205,6 +190,19 @@ export default {
       axios
       .delete('http://localhost:9000/' + 'proposals/' + this.proposalId)
       .then(response => {
+        console.log(response)
+      })
+      .catch(e => {
+        console.log(e)
+        console.log(e.response)
+      })
+    },
+    getClient(){
+      axios
+      .get('http://localhost:9000/' + 'clients/' + this.clientId)
+      .then(response => {
+        this.client = response.data
+        console.log(response.data)
         console.log(response)
       })
       .catch(e => {

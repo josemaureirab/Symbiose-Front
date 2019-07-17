@@ -22,6 +22,7 @@ export default new Vuex.Store({
     serverURL: 'http://localhost:9000',
     proposalList: [],
     clientsList: [],
+    usersList: [],
     proposalId: {},
     proposalIdStr: "",
     proposal: {},
@@ -35,6 +36,7 @@ export default new Vuex.Store({
       { icon: 'mdi-account', title: 'Usuarios', to: '/users' },
       { icon: 'fas fa-mug-hot', title: 'Clientes', to: '/clients' },
       { icon: 'fas fa-plus-square', title: 'Agregar Propuesta', to: '/createProposal' },
+      { icon: 'fas fa-sign-in-alt', title: 'Login', to: '/login' },
       /* { icon: 'fas fa-check-double', title: 'Check-out', to: '/checkout'},
       { icon: 'fas fa-check', title: 'Check-in', to: '/checkin' },
       { icon: 'mdi-clipboard-outline', title: 'Reservas', to: '/reservations' } */
@@ -153,10 +155,29 @@ export default new Vuex.Store({
             const clients = response.data
             if (clients.length != 0) {
               this.state.clientsList = clients
-              var clientList = this.state.clientsList;
-              //console.log(clientList)
             } else {
               console.log('No se han encontrado clientes')
+            }
+          })
+          .catch(e => {
+            console.log(e.response)
+          })
+      } catch (error) {
+        console.log(error)
+      }
+    },
+    async getAllUsers() {
+      try {
+        await axios
+          .get(this.state.serverURL + '/users/')
+          .then(response => {
+            //console.log(response)
+            //console.log(response.data)
+            const users = response.data
+            if (users.length != 0) {
+              this.state.usersList = users
+            } else {
+              console.log('No se han encontrado usuarios')
             }
           })
           .catch(e => {
@@ -171,8 +192,6 @@ export default new Vuex.Store({
         await axios
           .get(this.state.serverURL + '/proposals/create')
           .then(response => {
-            console.log("idSTR")
-            console.log(response.data)
               this.state.proposalIdStr = response.data
           })
           .catch(e => {

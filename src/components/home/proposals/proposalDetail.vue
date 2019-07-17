@@ -84,12 +84,22 @@
         <material-card class="v-card-profile">
           <v-card-text class="text-xs-center">
             <h4 class="font-weight text-capitalize">Archivos asociados:</h4>
-            <img class="img-pdf" src="@/assets/img_119919.png" alt="">
+              <v-list-tile
+                v-for="(file, i) in this.proposal.files"
+                :key="i"
+                :to="file.to"
+                avatar
+                class="v-list-item"
+                exact
+                >
+              <v-btn round
+              class="font-light buttonClient" @click="descargar(file)">Descargar</v-btn>
+              <img class="img-pdf" src="@/assets/img_119919.png" alt="">
+              <v-list-tile-title
+            v-text="file"
+          />
+               </v-list-tile>
             <br>
-            <v-btn
-              round
-              class="font-light buttonClient"
-            >Descargar</v-btn>
           </v-card-text>
         </material-card>
       </v-flex>
@@ -133,7 +143,33 @@ export default {
   methods: {
     ...mapActions([
       'getProposal'
-    ])
+    ]),
+    forceFileDownload(url){
+      const link = document.createElement('a')
+      //console.log(link)
+      //url = "../../../../" + url
+      console.log(url)
+      link.href = url
+      link.setAttribute('download', 'file.pdf')
+      console.log(link)
+      document.body.appendChild(link)
+      link.click()
+    },
+    descargar(file){
+      //var path = require('path');
+      //var filename = path.basename('/Users/');
+      //console.log(filename);
+      let formData = new FormData();
+      formData.append('proposalId', this.proposalIdStr);
+      formData.append('fileName', file);
+      axios
+      .post('http://localhost:9000' + '/upload/getfile', formData)
+      .then(response => {
+        console.log(response.data)
+        this.forceFileDownload(response.data)
+      })
+      .catch(() => console.log('No se encontro el archivo'))
+    }
   },
   computed: {
     ...mapState([
