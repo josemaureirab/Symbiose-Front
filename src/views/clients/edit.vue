@@ -1,19 +1,19 @@
 <template>
-  <div id="guest-edit">
+  <div id="clients-edit">
     <v-container>
-      <guest-update/>
+      <clients-update/>
     </v-container>
   </div>
 </template>
 
 <script>
 
-import GuestUpdate from '@/components/guest/update'
+import ClientsUpdate from '@/components/clients/update'
 
 export default {
-  name: 'guest-edit',
+  name: 'clients-edit',
     components: {
-      'guest-update': GuestUpdate,
+      'clients-update': ClientsUpdate,
     },
     data() {
       return {

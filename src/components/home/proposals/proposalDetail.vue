@@ -22,7 +22,7 @@
 
             <v-card-title primary-title>
             <div>
-                <div class="headline font-weight-black text-uppercase">{{ proposal.name }}</div>
+                <div class="headline font-weight-black text-uppercase">{{ proposal }}</div>
                 <br>
                 <span class="grey--text">I'm a thing. But, like most politicians, he promised more than he could deliver. You won't have time for sleeping, soldier, not with all the bed making you'll be doing. Then we'll go with that data file! Hey, you add a one and two zeros to that or we walk! You're going to do his laundry? I've got to find a way to escape.
 
@@ -30,7 +30,7 @@
                 <br>
                 <br>
                 <v-icon class="icon-label" >label</v-icon>
-                <span class="font-weight text-capitalize">Fecha de creación: {{ dateCreation }}</span>
+                <span class="font-weight text-capitalize">Fecha de creación: {{ proposal.name }}</span>
                 <br>
                 <br>
                 <v-icon class="icon-label" >label</v-icon>
@@ -44,9 +44,6 @@
                 <v-icon class="icon-label" >label</v-icon>
                 <span class="font-weight text-capitalize">Presupuesto asociado: R$1000</span>
                 <br>
-
-                
-
             </div>
             </v-card-title>
               
@@ -87,12 +84,22 @@
         <material-card class="v-card-profile">
           <v-card-text class="text-xs-center">
             <h4 class="font-weight text-capitalize">Archivos asociados:</h4>
-            <img class="img-pdf" src="@/assets/img_119919.png" alt="">
+              <v-list-tile
+                v-for="(file, i) in this.proposal.files"
+                :key="i"
+                :to="file.to"
+                avatar
+                class="v-list-item"
+                exact
+                >
+              <v-btn round
+              class="font-light buttonClient" @click="descargar(file)">Descargar</v-btn>
+              <img class="img-pdf" src="@/assets/img_119919.png" alt="">
+              <v-list-tile-title
+            v-text="file"
+          />
+               </v-list-tile>
             <br>
-            <v-btn
-              round
-              class="font-light buttonClient"
-            >Descargar</v-btn>
           </v-card-text>
         </material-card>
       </v-flex>
@@ -116,20 +123,51 @@ export default {
   data () {
     return {
       dateCreation: "12/12/2018",
-      dateLimit: "12/07/2019"
+      dateLimit: "12/07/2019",
+      dropzoneOptions: {
+          url: 'https://httpbin.org/post',
+          thumbnailWidth: 150,
+          maxFilesize: 256,
+          acceptedFiles: ".pdf",
+          parallelUploads: 1
+      }
     }
   },
   components: {
     'material-card': MaterialCard
   },
   created() {
-    this.proposalId = this.$route.params.id
-    this.getProposal()
+    this.proposalId = this.$route.params.id;
+    this.getProposal();
   },
   methods: {
     ...mapActions([
       'getProposal'
-    ])
+    ]),
+    forceFileDownload(url, name){
+      const link = document.createElement('a')
+      //console.log(link)
+      //url = "../../../../" + url
+      console.log(url)
+      link.href = url
+
+      link.setAttribute('download', name)
+      console.log(link)
+      document.body.appendChild(link)
+      link.click()
+    },
+    descargar(file){
+      let formData = new FormData();
+      formData.append('proposalId', this.proposalIdStr);
+      formData.append('fileName', file);
+      axios
+      .post('http://localhost:9000' + '/upload/getfile', formData)
+      .then(response => {
+        console.log(response.data)
+        this.forceFileDownload(response.data, file)
+      })
+      .catch(() => console.log('No se encontro el archivo'))
+    }
   },
   computed: {
     ...mapState([

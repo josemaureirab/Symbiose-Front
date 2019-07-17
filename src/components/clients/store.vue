@@ -1,43 +1,7 @@
 <template>
   <div id="guest-store">
     <v-container fluid>
-      <v-alert
-        :value="storeGuestSuccess"
-        color="success"
-        icon="check_circle"
-        outline
-        dismissible
-      >
-        El huésped ha sido agregado con éxito.
-      </v-alert>
-      <v-alert
-        :value="deleteGuestSuccess"
-        color="success"
-        icon="check_circle"
-        outline
-        dismissible
-      >
-        El huésped ha sido eliminado con éxito con éxito.
-      </v-alert>
-      <v-alert
-        :value="storeGuestError"
-        color="error"
-        icon="warning"
-        outline
-        dismissible
-      >
-        Ha ocurrido un error al crear el huésped.
-      </v-alert>
-      <v-alert
-        :value="deleteGuestError"
-        color="error"
-        icon="warning"
-        outline
-        dismissible
-      >
-        Ha ocurrido un error al eliminar al huésped.
-      </v-alert>
-      <form @submit.prevent="storeGuest(isReservation)">
+      <form @submit.prevent="storeGuestCall(isReservation)">
         <v-text-field
           v-model="guest.firstName"
           v-validate="'required|max:20'"
@@ -75,6 +39,7 @@
               :nudge-right="40"
               :return-value.sync="date"
               lazy
+              :max="today"
               transition="scale-transition"
               offset-y
               full-width
@@ -83,6 +48,7 @@
               <template v-slot:activator="{ on }">
                 <v-text-field
                   v-model="guest.birthDate"
+                  :max="today"
                   label="Fecha de nacimiento"
                   prepend-icon="event"
                   readonly
@@ -97,7 +63,7 @@
                 @blur="$v.checkbox.$touch()"
               ></v-checkbox>                
               </template>
-              <v-date-picker v-model="guest.birthDate" no-title required scrollable>
+              <v-date-picker v-model="guest.birthDate" :max="today" no-title required scrollable>
                 <v-spacer></v-spacer>
                 <v-btn flat color="primary" @click="menu = false">Cancel</v-btn>
                 <v-btn flat color="primary" @click="$refs.menu.save(date)">OK</v-btn>
@@ -113,24 +79,32 @@
         <v-btn round dark v-if="isReservation && !clientSelect" @click="updateClientSelect(!clientSelect)" color="info"> Cliente registrado <v-icon dark>how_to_reg</v-icon></v-btn>
         <v-btn round dark v-if="clientSelect" @click="updateClientSelect(!clientSelect)" color="red"> Cancelar <v-icon dark>clear</v-icon></v-btn>       
       </form>
+    <guest-alert text="El huésped ha sido añadido satisfactoriamente" color="success" :timeout="2250"/>
     </v-container>
   </div>
 </template>
 
 <script>
 
-import { mapState, mapActions, mapMutations } from 'vuex';
+import moment from 'moment'
+import GuestAlert from '@/components/clients/alert'
+import { mapState, mapActions, mapMutations } from 'vuex'
 import { validationMixin } from 'vuelidate'
 import { required, maxLength, email } from 'vuelidate/lib/validators'
 
 export default {
-	name: 'guest-store',
+  name: 'guest-store',
+  components: {
+    'guest-alert': GuestAlert
+  },
   props: [
     'guests',
-    'isReservation'
+    'isReservation',
+    'isCheckin'
     ],
 	data(){
 		return{
+      today: '',
 			date: '',
       menu: '',
       checkbox: '',
@@ -168,13 +142,17 @@ export default {
   },
   $_veeValidate: {
     validator: 'new'
-  },  
+  }, 
+  created() {
+    this.today = moment().format("YYYY-MM-DD").toString();
+  }, 
   mounted() {
     this.$validator.localize('en', this.dictionary)
   },
 	methods: {
     ...mapActions([
-      'storeGuest'
+      'storeGuest',
+      'updateHostedAt'
     ]),
     ...mapMutations([
       'updateClientSelect'
@@ -189,19 +167,42 @@ export default {
       this.guest.birthDate = null
       this.checkbox = null
       this.$validator.reset()
+    },
+    storeGuestCall (payload) {
+      if (this.isCheckin) {
+        this.guestId = this.guest.id
+        this.updateHostedAt()
+        this.$store.commit('updateCollapsePanel', true)
+      }
+      else {
+        this.storeGuest(payload)
+      }
     }
 	},
 	computed: {
     ...mapState([
       'serverURL',
       'guest',
+      'guestId',
       'loader',
-      'storeGuestSuccess',
-      'storeGuestError',
-      'deleteGuestSuccess',
-      'deleteGuestError',
       'clientSelect'
     ]),
+    guest: {
+      get () {
+        return this.$store.state.guest;
+      },
+      set (payload) {
+        this.$store.commit('updateGuest', payload)
+      }
+    },
+    guestId: {
+      get () {
+        return this.$store.state.guestId
+      },
+      set (payload) {
+        this.$store.commit('updateGuestId', payload)
+      }
+    },
     checkboxErrors () {
       const errors = []
       if (!this.$v.checkbox.$dirty) return errors
