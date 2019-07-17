@@ -26,6 +26,8 @@ export default new Vuex.Store({
     proposalId: {},
     proposalIdStr: "",
     proposal: {},
+    client: {},
+    user: {},
     loader: false,
     /* Template Stuffs */
     clipped: false,

@@ -22,19 +22,14 @@
 
             <v-card-title primary-title>
             <div>
-                <div class="headline font-weight-black text-uppercase">{{ proposal }}</div>
+                <div class="headline font-weight-black text-uppercase">{{ proposal.name }}</div>
                 <br>
                 <span class="grey--text">I'm a thing. But, like most politicians, he promised more than he could deliver. You won't have time for sleeping, soldier, not with all the bed making you'll be doing. Then we'll go with that data file! Hey, you add a one and two zeros to that or we walk! You're going to do his laundry? I've got to find a way to escape.
-
                 </span>
                 <br>
                 <br>
                 <v-icon class="icon-label" >label</v-icon>
-                <span class="font-weight text-capitalize">Fecha de creación: {{ proposal.name }}</span>
-                <br>
-                <br>
-                <v-icon class="icon-label" >label</v-icon>
-                <span class="font-weight text-capitalize">Fecha límite: {{ dateLimit }}</span>
+                <span class="font-weight text-capitalize">Fecha de creación: {{ proposal.created }}</span>
                 <br>
                 <br>
                 <v-icon class="icon-label" >label</v-icon>
@@ -71,13 +66,10 @@
             >
           </v-avatar>
           <v-card-text class="text-xs-center">
-            <h4 class="font-weight text-capitalize">Guillermito Campos</h4>
-            <p class="font-weight text-capitalize">Empresa: Rollers Inc</p>
-            <p class="font-weight text-capitalize">Nº de Proyectos: 5</p>
-            <v-btn
-              round
-              class="font-light buttonClient"
-            >Ver Cliente</v-btn>
+            <h4 class="font-weight text-capitalize">{{client.name}}</h4>
+            <p class="font-weight text-capitalize">Empresa: {{client.company}}</p>
+            <p class="font-weight text-capitalize">Valoración: {{client.score}}</p>
+            <v-btn round class ="font-light buttonClient" :to="{name: 'client_detail', params: {client: client,  clientId: client.idStr}}">Ver Cliente</v-btn>
           </v-card-text>
         </material-card>
 
@@ -130,7 +122,9 @@ export default {
           maxFilesize: 256,
           acceptedFiles: ".pdf",
           parallelUploads: 1
-      }
+      },
+      clientId: "",
+      client: [],
     }
   },
   components: {
@@ -139,6 +133,10 @@ export default {
   created() {
     this.proposalId = this.$route.params.id;
     this.getProposal();
+  },
+  mounted(){
+  this.clientId = this.$route.params.clientId;
+  this.getClient();
   },
   methods: {
     ...mapActions([
@@ -155,6 +153,19 @@ export default {
       console.log(link)
       document.body.appendChild(link)
       link.click()
+    },
+    getClient(){
+      axios
+      .get('http://localhost:9000/' + 'clients/' + this.clientId)
+      .then(response => {
+        this.client = response.data
+        console.log(response.data)
+        console.log(response)
+      })
+      .catch(e => {
+        console.log(e)
+        console.log(e.response)
+      })
     },
     descargar(file){
       let formData = new FormData();
