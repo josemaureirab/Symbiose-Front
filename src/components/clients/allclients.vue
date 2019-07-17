@@ -5,25 +5,24 @@
     :class="`elevation-${hover ? 12 : 2}`"
     class="cardProposal">
         <v-img
-            src="https://mattolpinski.com/wp-content/uploads/2017/12/proposal-teaser.jpg"
+            src="https://i1.wp.com/actualidadempresa.com/wp-content/uploads/2017/04/CALIDAD-SERVICIO-COMUNICACION-TOTAL.jpg?resize=696%2C392"
             height="200px"
             >
         </v-img>
 
         <v-card-title primary-title>
         <div>
-            <div class="headline">{{proposal.name}}</div>
-            <span class="grey--text">{{proposal.description}}</span>
+            <div class="headline text-sm-left">{{client.name}}</div>
+            <p class="grey--text text-sm-left">Empresa: {{client.company}}</p>
+            <p class="grey--text text-sm-left">Valoración: {{client.score}}</p>
         </div>
         </v-card-title>
-
+        
         <v-card-actions>
-        <v-btn flat :to="{name: 'proposal_detail', params: {proposal: proposal, id: proposal.idStr, clientId: proposal.clientIdStr}}">Ingresar</v-btn>
-        <v-btn flat color="blue" :to="{name: 'proposal_edit', params: {description: proposal.description, id: proposal.idStr, name: proposal.name, clientId: proposal.clientIdStr}}">Editar</v-btn>
+            <br>
+             <v-btn flat :to="{name: 'client_detail', params: {client: client,  clientId: client.idStr}}">Ver Cliente</v-btn>
         <v-spacer></v-spacer>
-        <v-btn icon @click="show = !show">
-            <v-icon>{{ show ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
-        </v-btn>
+       
         </v-card-actions>
 
         <v-slide-y-transition>
@@ -40,7 +39,7 @@ import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
   props: [
-    "proposal"
+    "client"
   ],
   data: () => ({
       show: false
@@ -53,6 +52,7 @@ export default {
 .cardProposal{
   margin-right: 5% !important;
 }
+
 
 
 </style>

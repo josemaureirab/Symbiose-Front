@@ -5,25 +5,20 @@
     :class="`elevation-${hover ? 12 : 2}`"
     class="cardProposal">
         <v-img
-            src="https://mattolpinski.com/wp-content/uploads/2017/12/proposal-teaser.jpg"
+            src="https://miro.medium.com/max/1200/1*BIJ5kkEkHkzraLDBSQD5_w.jpeg"
             height="200px"
             >
         </v-img>
 
         <v-card-title primary-title>
         <div>
-            <div class="headline">{{proposal.name}}</div>
-            <span class="grey--text">{{proposal.description}}</span>
+            <div class="headline text-sm-left">Nombre: {{user.firstName}} {{user.lastName}}</div>
         </div>
         </v-card-title>
-
+        
         <v-card-actions>
-        <v-btn flat :to="{name: 'proposal_detail', params: {proposal: proposal, id: proposal.idStr, clientId: proposal.clientIdStr}}">Ingresar</v-btn>
-        <v-btn flat color="blue" :to="{name: 'proposal_edit', params: {description: proposal.description, id: proposal.idStr, name: proposal.name, clientId: proposal.clientIdStr}}">Editar</v-btn>
-        <v-spacer></v-spacer>
-        <v-btn icon @click="show = !show">
-            <v-icon>{{ show ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>
-        </v-btn>
+            <br>
+       
         </v-card-actions>
 
         <v-slide-y-transition>
@@ -40,7 +35,7 @@ import { mapState, mapMutations, mapActions } from "vuex";
 
 export default {
   props: [
-    "proposal"
+    "user"
   ],
   data: () => ({
       show: false
@@ -53,6 +48,7 @@ export default {
 .cardProposal{
   margin-right: 5% !important;
 }
+
 
 
 </style>

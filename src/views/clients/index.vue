@@ -32,17 +32,12 @@
                 <v-icon class="icon-label" >label</v-icon>
                 <span class="font-weight text-capitalize">Empresa: {{ client.company }}</span>
                 <br>
-                <span class="font-weight text-capitalize">Id: {{ clientId }}</span>
-                <br>
                 <v-icon class="icon-label" >label</v-icon>
-                <!-- <span class="font-weight text-capitalize">Score: {{ client.score }}</span> -->
-                <v-flex xs6>
-                <v-textarea
-                  name="score"
-                  label="Puntaje"
-                  v-model=client.score
-                ></v-textarea>
-              </v-flex>
+                <span class="font-weight text-capitalize">Valoración: {{ client.score }}</span>
+                
+                <br>
+                <br>
+                <br>
                 <span class="font-weight text-capitalize">Valorar</span>
                 <v-btn color="success" @click="valorar(1)">1</v-btn>
                 <v-btn color="success" @click="valorar(2)">2</v-btn>
@@ -102,7 +97,7 @@ export default {
   methods:{
     valorar(score){
       let formData = new FormData();
-      formData.append('clientId', this.clientId);
+      formData.append('clientId', this.client.idStr);
       formData.append('name', this.client.name);
       formData.append('company', this.client.company);
       formData.append('score', score);
@@ -110,7 +105,7 @@ export default {
       .put('http://localhost:9000/' + 'clients/', formData)
       .then(response => {
         this.client.name = response.data.name
-        this.client.company = response.data.description
+        this.client.company = response.data.company
         this.client.score = response.data.score
         console.log(response)
       })

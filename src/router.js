@@ -17,6 +17,13 @@ export default new Router({
       name: 'login',
       component: () => import('@/views/Login.vue')
     },
+
+    //Users
+    {
+      path: '/users',
+      name: 'users',
+      component: () => import('@/views/users/allusers.vue')
+    },
     //Clients
     {
       path: '/client',
@@ -27,6 +34,11 @@ export default new Router({
       path: '/clients',
       name: 'clients',
       component: () => import('@/views/clients/clients.vue')
+    },
+    {
+      path: '/allclients',
+      name: 'allclients',
+      component: () => import('@/views/clients/allclients.vue')
     },
     {
       path: '/clients_edit/:id',

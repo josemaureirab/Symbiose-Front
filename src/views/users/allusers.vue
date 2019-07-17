@@ -2,8 +2,8 @@
   <div id="home">
     <v-container grid-list-md text-xs-center>
       <v-layout row wrap>
-        <v-flex v-for="client in clientsList" :key="client.idStr" sm12 xs12 lg4>
-          <clients-allclients :client="client"/>
+        <v-flex v-for="user in usersList" :key="user.firstName" sm12 xs12 lg4>
+          <users-allusers :user="user"/>
         </v-flex>
       </v-layout>
     </v-container>
@@ -13,25 +13,25 @@
 <script>
 import axios from 'axios'
 import { mapState, mapMutations, mapActions } from "vuex";
-import Clients from '@/components/clients/allclients'
+import Users from '@/components/users/allusers'
 
 export default {
-  name: 'client',
+  name: 'user',
   components: {
-    'clients-allclients': Clients,
+    'users-allusers': Users,
   },
   data: function () {
     return {
     }
   },
   created() {
-    this.getAllClients()
+    this.getAllUsers()
   },
   computed: {
-    ...mapState(["clientsList"]),
+    ...mapState(["usersList"]),
   },
   methods: {
-    ...mapActions(["getAllClients"])
+    ...mapActions(["getAllUsers"])
   }
 }
 </script>
