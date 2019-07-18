@@ -3,8 +3,8 @@
     <v-container grid-list-md text-xs-center>
       <v-text-field
         box
-        label="Append"
-        append-icon="place"
+        label="Buscar propuesta"
+        prepend-inner-icon="search"
         v-model="searchedProposal"
         v-on:keyup="searchByName"
       ></v-text-field>
