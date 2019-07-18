@@ -4,7 +4,6 @@
     fluid
     grid-list-xl>
     <v-layout
-      justify-center
       wrap
     >
       <v-flex 
@@ -22,7 +21,7 @@
 
             <v-card-title primary-title>
             <div>
-                <div class="headline font-weight-black text-uppercase">{{ proposal }}</div>
+                <div class="headline font-weight-black text-uppercase">{{ proposal.name }}</div>
                 <br>
                 <v-flex xs6>
                 <v-textarea
@@ -49,7 +48,14 @@
               <v-btn color="success" @click="actualizarPropuesta()">Actualizar</v-btn>
               <v-btn color="error" @click="eliminarPropuesta()">Eliminar</v-btn>
                 <vueDropzone id="dropzone" :options ="dropzoneOptions"/>
-              <v-flex
+            </div>
+            </v-card-title>
+            <v-card-actions>
+            <v-spacer></v-spacer>
+            </v-card-actions>
+        </v-card>
+      </v-flex>
+       <v-flex
         xs12
         md4
         lg4
@@ -69,8 +75,7 @@
             <p class="font-weight text-capitalize">Empresa: {{client.company}}</p>
             <p class="font-weight text-capitalize">Valoración: {{client.score}}</p>
             <v-btn round class ="font-light buttonClient" :to="{name: 'client_detail', params: {client: client,  clientId: clientId}}">Ver Cliente</v-btn>
-            <v-btn color="success" @click="actualizarPropuesta()">Actualizar</v-btn>
-              <v-btn color="error" @click="eliminarPropuesta()">Eliminar</v-btn>
+
           </v-card-text>
         </material-card>
 
@@ -85,13 +90,6 @@
             >Descargar</v-btn>
           </v-card-text>
         </material-card>
-      </v-flex>
-            </div>
-            </v-card-title>
-            <v-card-actions>
-            <v-spacer></v-spacer>
-            </v-card-actions>
-        </v-card>
       </v-flex>
     </v-layout>
   </v-container>
@@ -179,7 +177,7 @@ export default {
       'getProposal'
     ]),
     doThis () {
-      this.actualizarPropuesta();
+      //this.actualizarPropuesta();
     },
     actualizarPropuesta(){
       let formData = new FormData();
@@ -194,6 +192,7 @@ export default {
         this.proposalDesc = response.data.description
         this.files = response.data.files
         console.log(response)
+        router.push({ name: 'home' })
       })
       .catch(e => {
         console.log(e)
@@ -205,6 +204,7 @@ export default {
       .delete(this.serverURL + '/proposals/' + this.proposalId)
       .then(response => {
         console.log(response)
+        router.push({ name: 'home' })
       })
       .catch(e => {
         console.log(e)

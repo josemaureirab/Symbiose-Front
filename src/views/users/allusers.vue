@@ -47,7 +47,7 @@ export default {
     },
   searchByName () {
       this.finalUserList = this.usersList.filter(user => {
-        return ((user.firstName.toLowerCase()).includes(this.searchedUser.toLowerCase()))
+        return ((user.firstName.toLowerCase()).includes(this.searchedUser.toLowerCase()) || (user.lastName.toLowerCase()).includes(this.searchedUser.toLowerCase()))
       })
     }
   }
