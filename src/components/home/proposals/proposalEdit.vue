@@ -159,7 +159,8 @@ export default {
       console.log(propo)
       console.log(formData)
       axios
-      .post('http://projecthunter.tk:8080/symbiose' + '/upload/', formData)
+      .post('http://localhost:9000' + '/upload/', formData)
+      //.post('http://projecthunter.tk:8080/symbiose' + '/upload/', formData)
       .then(response => {
         console.log(response)
       })
@@ -177,22 +178,25 @@ export default {
       'getProposal'
     ]),
     doThis () {
-      //this.actualizarPropuesta();
+      this.actualizarPropuesta();
     },
     actualizarPropuesta(){
       let formData = new FormData();
-      formData.append('proposalId', this.proposalIdStr);
-      formData.append('name', this.proposalName);
-      formData.append('description', this.proposalDesc);
+      formData.append('proposalId', this.proposal.idStr);
+      formData.append('name', this.proposal.name);
+      formData.append('description', this.proposal.description);
       formData.append('files', this.proposal.files);
+      formData.append('user', this.$store.state.user.idStr);
+      console.log(formData)
       axios
       .put(this.serverURL + '/proposals/', formData)
       .then(response => {
-        this.proposalName = response.data.name
-        this.proposalDesc = response.data.description
-        this.files = response.data.files
+        this.proposal.name = response.data.name
+        this.proposal.description = response.data.description
+        this.proposal.files = response.data.files
+        this.proposal.user = response.data.user
         console.log(response)
-        router.push({ name: 'home' })
+        //router.push({ name: 'home' })
       })
       .catch(e => {
         console.log(e)

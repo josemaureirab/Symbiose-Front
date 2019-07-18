@@ -198,7 +198,9 @@ export default new Vuex.Store({
         await axios
           .get(this.state.serverURL + '/proposals/create')
           .then(response => {
-              this.state.proposalIdStr = response.data
+              this.state.proposal = response.data
+              console.log("create proposal")
+              console.log(response.data)
           })
           .catch(e => {
             console.log(e.response)
