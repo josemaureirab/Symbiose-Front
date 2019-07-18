@@ -61,7 +61,7 @@ export default {
     },
     searchByName () {
       this.finalProposalList = this.proposalList.filter(proposal => {
-        return ((proposal.name.toLowerCase()).includes(this.searchedProposal.toLowerCase()))
+        return ((proposal.name.toLowerCase()).includes(this.searchedProposal.toLowerCase()) || (proposal.description.toLowerCase()).includes(this.searchedProposal.toLowerCase()))
       })
     }
   }
