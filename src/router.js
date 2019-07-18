@@ -66,6 +66,11 @@ export default new Router({
       path: '/addFiles',
       name: 'proposal_files',
       component: () => import('@/views/proposal/proposal_files.vue')
+    },
+    {
+      path: '/trace',
+      name: 'trace',
+      component: () => import('@/views/trace.vue')
     }
   ]
 })

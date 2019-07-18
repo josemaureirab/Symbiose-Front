@@ -96,6 +96,8 @@
                </v-list-tile>
             <br>
             <v-btn color="primary" @click="generar()">Descargar propuesta pdf</v-btn>
+            <v-btn round class ="font-light buttonClient" :to="{name: 'client_detail', params: {client: client,  clientId: client.idStr}}">Ver Cliente</v-btn>
+            <v-btn color="primary" :to="{name: 'trace', params: {id: this.proposalId}}">Ver historial de cambios</v-btn>
           </v-card-text>
         </material-card>
       </v-flex>
