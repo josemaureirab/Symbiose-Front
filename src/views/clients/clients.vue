@@ -47,7 +47,7 @@ export default {
     },
   searchByName () {
       this.finalClientList = this.clientsList.filter(client => {
-        return ((client.name.toLowerCase()).includes(this.searchedClient.toLowerCase()))
+        return ((client.name.toLowerCase()).includes(this.searchedClient.toLowerCase()) || (client.company.toLowerCase()).includes(this.searchedClient.toLowerCase()))
       })
     }
   }

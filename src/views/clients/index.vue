@@ -57,6 +57,10 @@
             <v-card-actions>
             <v-spacer></v-spacer>
             </v-card-actions>
+            <div class="text-xs-center">
+                <v-btn round class ="font-light buttonClient" :to="{name: 'home'}">Ir a Propuestas</v-btn>
+                <v-btn round class ="font-light buttonClient" :to="{name: 'allclients'}">Ir a Clientes</v-btn>
+            </div>
         </v-card>
       </v-flex>
     </v-layout>

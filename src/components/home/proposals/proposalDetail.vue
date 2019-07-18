@@ -42,12 +42,15 @@
             </div>
             </v-card-title>
               
-
             <v-card-actions>
             
             <v-spacer></v-spacer>
             
             </v-card-actions>
+            <div class="text-xs-center">
+              <v-btn round class ="font-light buttonClient" :to="{name: 'home'}">Volver a Propuestas</v-btn>
+            </div>
+            
         </v-card>
       </v-flex>
       <v-flex
