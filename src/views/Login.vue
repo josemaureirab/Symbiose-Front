@@ -80,6 +80,8 @@ export default {
       .then(response => {
         console.log(this)
         this.$store.commit('updateLogueado', 'si')
+        this.$store.commit('updateUser', this.userName)
+        this.$store.commit('updateUserId', response.data.idStr)
         console.log(response)
 
       })
@@ -92,9 +94,7 @@ export default {
   },
   computed: {
     ...mapState([
-      'serverURL',
-      'logueado',
-      'user'
+      'serverURL'
     ]),
     logueado: {
       get () {
@@ -104,6 +104,14 @@ export default {
         this.$store.commit('updateLogueado', payload)
       }
     },
+    user: {
+      get () {
+        return this.$store.state.userName;
+      },
+      set (payload) {
+        this.$store.commit('updateUser', payload)
+      }
+    }
   }
 }
 </script>

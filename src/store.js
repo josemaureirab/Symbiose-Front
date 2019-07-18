@@ -29,7 +29,8 @@ export default new Vuex.Store({
     proposalIdStr: "",
     proposal: {},
     client: {},
-    user: {},
+    userName: "",
+    userIdStr: "",
     loader: false,
     /* Template Stuffs */
     clipped: false,
@@ -124,7 +125,10 @@ export default new Vuex.Store({
       state.logueado = payload
     },
     updateUser(state, payload) {
-      state.user = payload
+      state.userName = payload
+    },
+    updateUserId(state, payload) {
+      state.userId = payload
     }
   },
   actions: {

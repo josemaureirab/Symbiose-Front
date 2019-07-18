@@ -29,7 +29,7 @@
             </v-avatar>
           </v-list-tile-avatar>
           <v-list-tile-title class="ml-3 title">
-            Admin{{user.firstName}}
+            {{userName}}
           </v-list-tile-title>
         </v-list-tile>
         <v-divider/>
@@ -75,13 +75,13 @@ export default {
       color: 'warning',
       image: 'https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-2.32103624.jpg',
       responsive: false,
-      usuarioActual: {}
+      usuarioActual: ""
     }
   },
   created() {
-    this.usuarioActual = user
-    console.log(this.$store.state.user)
-    console.log("hola")
+    //this.usuarioActual = this.userName;
+    //console.log(this.usuarioActual)
+    //console.log("hola")
   },
   computed: {
     ...mapState([
@@ -89,7 +89,7 @@ export default {
       'clipped',
       'drawer',
       'drawerItems',
-      'user'
+      'userName'
     ]),
     inputValue: {
       get () {
@@ -104,7 +104,7 @@ export default {
     },
     user: {
       get () {
-        return this.$store.state.user;
+        return this.$store.state.userName;
       }
     },
     miniVariant: {

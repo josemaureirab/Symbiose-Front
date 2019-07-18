@@ -186,7 +186,7 @@ export default {
       formData.append('name', this.proposal.name);
       formData.append('description', this.proposal.description);
       formData.append('files', this.proposal.files);
-      formData.append('user', this.$store.state.user.idStr);
+      formData.append('user', this.userId);
       console.log("buscando el user")
       console.log(this.$store.state)
       console.log(formData)
@@ -235,7 +235,9 @@ export default {
     ...mapState([
       'proposal',
       'proposalId',
-      'serverURL'
+      'serverURL',
+      'userName',
+      'userId'
     ]),
     proposalId: {
       get () {

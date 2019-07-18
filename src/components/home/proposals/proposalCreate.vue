@@ -196,7 +196,7 @@ export default {
       formData.append('name', this.proposal.name);
       formData.append('description', this.proposal.description);
       formData.append('files', this.proposal.files);
-      formData.append('user', this.$store.state.user.idStr);
+      formData.append('user', this.userName);
       console.log(formData)
       axios
       .put(this.serverURL + '/proposals/', formData)
@@ -230,7 +230,8 @@ export default {
   computed: {
     ...mapState([
       'serverURL',
-      'clientsList'
+      'clientsList',
+      'userName'
     ])
   }
 }
