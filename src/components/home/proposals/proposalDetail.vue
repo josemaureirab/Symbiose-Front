@@ -165,7 +165,7 @@ export default {
       link.setAttribute('download', name)
       console.log(link)
       document.body.appendChild(link)
-      //link.click()
+      link.click()
     },
     getClient(){
       axios
