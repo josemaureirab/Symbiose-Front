@@ -19,6 +19,23 @@
                 <v-btn color="primary" @click="logear()">Ingresar</v-btn>
               </v-card-actions>
             </v-card>
+            <v-snackbar
+                v-model="snackbar"
+                :color="color"
+                :multi-line="mode === 'multi-line'"
+                :timeout="timeout"
+                :vertical="mode === 'vertical'"
+              >
+                {{ text }}
+                <v-btn
+                  dark
+                  flat
+                  @click="snackbar = false"
+                >
+                  Close
+                </v-btn>
+              </v-snackbar>
+
           </v-flex>
         </v-layout>
       </v-container>
@@ -39,7 +56,12 @@ export default {
   data () {
     return {
       userName: "",
-      userPass: ""
+      userPass: "",
+       snackbar: false,
+        color: 'error',
+        mode: '',
+        timeout: 6000,
+        text: 'Usuario no registrado'
     }
   },
   created() {
@@ -62,6 +84,7 @@ export default {
 
       })
       .catch(e => {
+        this.snackbar = true
         console.log(e)
         console.log(e.response)
       })
