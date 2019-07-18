@@ -93,7 +93,6 @@
                </v-list-tile>
             <br>
             <v-btn color="primary" @click="generar()">Descargar propuesta pdf</v-btn>
-            <v-btn color="primary" @click="prueba()">Probar</v-btn>
           </v-card-text>
         </material-card>
       </v-flex>
@@ -199,19 +198,6 @@ export default {
       console.log(link)
       document.body.appendChild(link)
       link.click()
-    },
-    prueba(){
-      let formData = new FormData();
-      formData.append('array', this.arreglo);
-      axios
-      .post(this.serverURL + '/pdfreport/test', formData)
-      .then(response => {
-        console.log(response)
-      })
-      .catch(e => {
-        console.log(e)
-        console.log(e.response)
-      })
     }
   },
   computed: {
