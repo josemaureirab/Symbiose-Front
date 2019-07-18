@@ -23,28 +23,22 @@
             <div>
                 <div class="headline font-weight-black text-uppercase">{{ proposal.name }}</div>
                 <br>
-                <v-flex xs6>
-                <v-textarea
-                  name="nombre"
+                <v-text-field
+              name="nombre"
                   label="Nombre"
-                  v-model=proposalName
-                ></v-textarea>
-              </v-flex>
-              <v-flex xs6>
-                <v-textarea
-                  name="descripción"
+                  v-model=proposal.name
+            ></v-text-field>
+            <v-text-field
+              name="descripción"
                   label="Descripción"
-                  v-model=proposalDesc
-                ></v-textarea>
-              </v-flex>
-              <v-flex xs6>
+                  v-model=proposal.description
+            ></v-text-field>
                 <v-select
-                  :items=this.files
+                  :items=this.proposal.files
                   label="Archivos"
                   @click.native="doThis"
                   @change="ejemplo()"
                 ></v-select>
-              </v-flex>
               <v-btn color="success" @click="actualizarPropuesta()">Actualizar</v-btn>
               <v-btn color="error" @click="eliminarPropuesta()">Eliminar</v-btn>
                 <vueDropzone id="dropzone" :options ="dropzoneOptions"/>
@@ -53,6 +47,22 @@
             <v-card-actions>
             <v-spacer></v-spacer>
             </v-card-actions>
+            <v-snackbar
+                v-model="snackbar"
+                :color="color"
+                :multi-line="mode === 'multi-line'"
+                :timeout="timeout"
+                :vertical="mode === 'vertical'"
+              >
+                {{ text }}
+                <v-btn
+                  dark
+                  flat
+                  @click="snackbar = false"
+                >
+                  Close
+                </v-btn>
+              </v-snackbar>
         </v-card>
       </v-flex>
        <v-flex
@@ -74,7 +84,7 @@
             <h4 class="font-weight text-capitalize">{{client.name}}</h4>
             <p class="font-weight text-capitalize">Empresa: {{client.company}}</p>
             <p class="font-weight text-capitalize">Valoración: {{client.score}}</p>
-            <v-btn round class ="font-light buttonClient" :to="{name: 'client_detail', params: {client: client,  clientId: clientId}}">Ver Cliente</v-btn>
+            <v-btn round class ="font-light buttonClient" :to="{name: 'client_detail', params: {client: client,  clientId: proposal.clientIdStr}}">Ver Cliente</v-btn>
 
           </v-card-text>
         </material-card>
@@ -110,13 +120,13 @@ export default {
   name: 'user-profile',
   data () {
     return {
-      algo: "Hola",
-      proposalName: "",
-      proposalDesc: "",
-      proposalIdStr: "",
-      clientId: "",
+      snackbar: false,
+        color: 'success',
+        mode: '',
+        timeout: 6000,
+        text: 'Usuario actualizado con éxito',
       client: [],
-      files: [],
+      proposal: [],
       dropzoneOptions: {
           url: 'https://httpbin.org/post',
           thumbnailWidth: 150,
@@ -132,32 +142,20 @@ export default {
     vueDropzone: vue2Dropzone
   },
   created() {
-    this.proposalId = this.$route.params.id;
-    this.files = this.proposal.files
+    this.proposal = this.$route.params.proposal
   },
   beforeMount(){
-    this.getProposal();
-    console.log("beforeMount")
-    console.log(this.getProposal())
+    
   },
   mounted() {
-    var propo = this.proposalId;
+    var id = this.proposal.idStr;
     var dropzoneVue = document.getElementById("dropzone").dropzone;
-    this.proposalName = this.$route.params.name;
-    this.proposalDesc = this.$route.params.description;
-    this.clientId = this.$route.params.clientId;
-    this.proposalIdStr = propo;
     this.getClient();
-    var propoFresh = this.getProposal()
 
     dropzoneVue.on("success", function(file) {
       let formData = new FormData();
       formData.append('file', file);
-      formData.append('proposalId', propo);
-      console.log("Entre")
-      console.log(file)
-      console.log(propo)
-      console.log(formData)
+      formData.append('proposalId', id);
       axios
       //.post('http://localhost:9000' + '/upload/', formData)
       .post('http://projecthunter.tk:8080/symbiose' + '/upload/', formData)
@@ -170,15 +168,26 @@ export default {
       })
      });
   },
-  updated() {
-    //this.getClient();
-  },
   methods: {
     ...mapActions([
       'getProposal'
     ]),
     doThis () {
-      this.actualizarPropuesta();
+      console.log("do.this")
+      console.log(this.proposal.files)
+      this.actualizarArchivos();
+    },
+    actualizarArchivos() {
+      console.log("actualizarArchivos")
+        axios
+          .get(this.serverURL + `/proposals/${this.proposal.idStr}`)
+          .then(response => {
+            console.log("buscando la propuesta")
+            this.proposal = response.data;
+          })
+          .catch(e => {
+            console.log(e.response);
+          })
     },
     actualizarPropuesta(){
       let formData = new FormData();
@@ -187,27 +196,29 @@ export default {
       formData.append('description', this.proposal.description);
       formData.append('files', this.proposal.files);
       formData.append('user', this.userId);
-      console.log("buscando el user")
-      console.log(this.$store.state)
-      console.log(formData)
       axios
       .put(this.serverURL + '/proposals/', formData)
       .then(response => {
+        this.snackbar = true
+        this.color = 'success'
+        this.text= 'Usuario actualizado con éxito',
         this.proposal.name = response.data.name
         this.proposal.description = response.data.description
         this.proposal.files = response.data.files
         this.proposal.user = response.data.user
-        console.log(response)
         //router.push({ name: 'home' })
       })
       .catch(e => {
+        this.snackbar = true
+        this.color = 'error'
+        this.text= 'Error al actualizar',
         console.log(e)
         console.log(e.response)
       })
     },
     eliminarPropuesta(){
       axios
-      .delete(this.serverURL + '/proposals/' + this.proposalId)
+      .delete(this.serverURL + '/proposals/' + this.proposal.idStr)
       .then(response => {
         console.log(response)
         router.push({ name: 'home' })
@@ -219,7 +230,7 @@ export default {
     },
     getClient(){
       axios
-      .get(this.serverURL + '/clients/' + this.clientId)
+      .get(this.serverURL + '/clients/' + this.proposal.clientIdStr)
       .then(response => {
         this.client = response.data
         console.log(response.data)
@@ -233,21 +244,11 @@ export default {
   },
   computed: {
     ...mapState([
-      'proposal',
-      'proposalId',
       'serverURL',
       'userName',
       'userId'
-    ]),
-    proposalId: {
-      get () {
-        return this.$store.state.proposalId;
-      },
-      set (payload) {
-        this.$store.commit('updateProposalId', payload)
-      }
-    },
-  },
+    ])
+  }
 }
 </script>
 

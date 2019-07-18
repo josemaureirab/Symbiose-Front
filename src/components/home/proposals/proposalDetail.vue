@@ -19,7 +19,6 @@
                 height="100px"
                 >
             </v-img>
-
             <v-card-title primary-title>
             <div>
                 <div class="headline font-weight-black text-uppercase">{{ proposal.name }}</div>
@@ -72,13 +71,15 @@
             <h4 class="font-weight text-capitalize">{{client.name}}</h4>
             <p class="font-weight text-capitalize">Empresa: {{client.company}}</p>
             <p class="font-weight text-capitalize">Valoración: {{client.score}}</p>
-            <v-btn round class ="font-light buttonClient" :to="{name: 'client_detail', params: {client: client,  clientId: client.idStr}}">Ver Cliente</v-btn>
+            <v-btn round class ="font-light buttonClient" :to="{name: 'client_detail', params: {client: client}}">Ver Cliente</v-btn>
           </v-card-text>
         </material-card>
 
         <material-card class="v-card-profile">
           <v-card-text class="text-xs-center">
             <h4 class="font-weight text-capitalize">Archivos asociados:</h4>
+            <img class="img-pdf" src="@/assets/img_119919.png" alt="">
+
               <v-list-tile
                 v-for="(file, i) in this.proposal.files"
                 :key="i"
@@ -87,21 +88,26 @@
                 class="v-list-item"
                 exact
                 >
-              <v-btn round
-              class="font-light buttonClient" @click="descargar(file)">Descargar</v-btn>
-              <img class="img-pdf" src="@/assets/img_119919.png" alt="">
-              <v-list-tile-title
-            v-text="file"
-          />
+                <v-text-field
+                  v-model="ruta"
+                  data-vv-name="Ruta"
+                ></v-text-field>
+
+                <br>
+              <v-btn round class="font-light buttonClient" @click="descargar(file)">Descargar</v-btn>
+
+              <!-- <v-btn round class="font-light buttonClient" @click="descargar(file)">Descargar</v-btn> -->
+              <!-- <v-list-tile-title v-text="file"/> -->
+
+
                </v-list-tile>
+
             <br>
             <v-btn color="primary" @click="generar()">Descargar propuesta pdf</v-btn>
-            <v-btn color="primary" :to="{name: 'trace', params: {id: this.proposalId}}">Ver historial de cambios</v-btn>
+            <v-btn color="primary" :to="{name: 'trace', params: {id: proposal.idStr}}">Ver historial de cambios</v-btn>
           </v-card-text>
         </material-card>
       </v-flex>
-      
-
     </v-layout>
   </v-container>
 </template>
@@ -116,9 +122,10 @@ import { mapState, mapActions } from 'vuex';
 import MaterialCard from '@/components/home/material/card.vue'
 
 export default {
-  name: 'user-profile',
+  name: 'proposal-detail',
   data () {
     return {
+      proposal: [],
       dateCreation: "12/12/2018",
       dateLimit: "12/07/2019",
       arreglo: [1,2,3,4,5,6],
@@ -129,19 +136,17 @@ export default {
           acceptedFiles: ".pdf",
           parallelUploads: 1
       },
-      clientId: "",
       client: [],
+      ruta: ""
     }
   },
   components: {
     'material-card': MaterialCard
   },
   created() {
-    this.proposalId = this.$route.params.id;
-    this.getProposal();
+    this.proposal = this.$route.params.proposal
   },
   mounted(){
-  this.clientId = this.$route.params.clientId;
   this.getClient();
   },
   methods: {
@@ -149,6 +154,10 @@ export default {
       'getProposal'
     ]),
     forceFileDownload(url, name){
+      console.log("url")
+      console.log(url)
+      console.log("name")
+      console.log(name)
       const link = document.createElement('a')
       console.log(url)
       link.href = url
@@ -156,11 +165,11 @@ export default {
       link.setAttribute('download', name)
       console.log(link)
       document.body.appendChild(link)
-      link.click()
+      //link.click()
     },
     getClient(){
       axios
-      .get(this.serverURL + '/clients/' + this.clientId)
+      .get(this.serverURL + '/clients/' + this.proposal.clientIdStr)
       .then(response => {
         this.client = response.data
         console.log(response.data)
@@ -172,20 +181,21 @@ export default {
       })
     },
     descargar(file){
-      let formData = new FormData();
-      formData.append('proposalId', this.proposalId);
-      formData.append('fileName', file);
-      axios
-      .post(this.serverURL + '/upload/getfile', formData)
-      .then(response => {
-        console.log(response.data)
-        this.forceFileDownload(response.data, file)
-      })
-      .catch(() => console.log('No se encontro el archivo'))
+      this.forceFileDownload(this.ruta+"static/"+file, file)
+      // let formData = new FormData();
+      // formData.append('proposalId', this.proposalId);
+      // formData.append('fileName', file);
+      // axios
+      // .post(this.serverURL + '/upload/getfile', formData)
+      // .then(response => {
+      //   console.log(response.data)
+      //   this.forceFileDownload(response.data, file)
+      // })
+      // .catch(() => console.log('No se encontro el archivo'))
     },
     generar(){
       let formData = new FormData();
-      formData.append('proposalId', this.proposalId);
+      formData.append('proposalId', this.proposal.idStr);
       axios
       .post(this.serverURL + '/pdfreport/', formData)
       .then(response => {
@@ -196,7 +206,7 @@ export default {
         console.log(e.response)
       })
       const link = document.createElement('a')
-      link.href = "/static/" + "generatedPdf_" + this.proposalId + ".pdf";
+      link.href = "/static/" + "generatedPdf_" + this.proposal.idStr + ".pdf";
       console.log(link.href)
       link.setAttribute('download', name)
       console.log(link)
@@ -206,19 +216,9 @@ export default {
   },
   computed: {
     ...mapState([
-      'proposal',
-      'proposalId',
       'serverURL'
-    ]),
-    proposalId: {
-      get () {
-        return this.$store.state.proposalId;
-      },
-      set (payload) {
-        this.$store.commit('updateProposalId', payload)
-      }
-    },
-  },
+    ])
+  }
 }
 </script>
 

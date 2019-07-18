@@ -73,8 +73,6 @@ export default {
       let formData = new FormData();
       formData.append('user', this.userName);
       formData.append('pass', this.userPass);
-      console.log(this.userName)
-      console.log(this.userPass)
       axios
       .put(this.serverURL + '/users/login', formData)
       .then(response => {

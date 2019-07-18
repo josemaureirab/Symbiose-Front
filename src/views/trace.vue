@@ -1,5 +1,7 @@
 <template>
-  <v-data-table
+<v-container>
+  <v-flex xs12 sm12 md12>
+    <v-data-table
     v-model="selected"
     :headers="headers"
     :items="traces"
@@ -74,6 +76,8 @@
       </tr>
     </template>
   </v-data-table>
+  </v-flex>
+</v-container>
 </template>
 
 <script>
@@ -93,14 +97,14 @@ export default {
       traces: [],
       changes: [],
       pagination: {
-        sortBy: 'name'
+        sortBy: 'firstName'
       },
       selected: [],
       headers: [
         {
           text: 'Usuario',
           align: 'left',
-          value: 'user'
+          value: 'user.firstName'
         },
         { text: 'Comentario', value: 'commentary' },
         { text: 'Hora', value: 'time' },

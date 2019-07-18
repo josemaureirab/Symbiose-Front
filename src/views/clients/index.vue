@@ -91,7 +91,7 @@ export default {
   },
   created() {
     this.client = this.$route.params.client;
-    this.clientId = this.$route.params.clientId;
+    this.clientId = this.$route.params.client.idStr;
     this.proposals = this.$route.params.client.proposals;
     this.nameProposals = this.proposals
     this.nameProposals.forEach((num, index) => {

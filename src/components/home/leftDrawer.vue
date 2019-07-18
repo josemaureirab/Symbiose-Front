@@ -36,11 +36,7 @@
         <v-list-tile
           v-if="responsive"
         >
-          <v-text-field
-            class="search-input"
-            label="Buscar..."
-            color="#f0bd24"
-          />
+          
         </v-list-tile>
         <v-list-tile
           v-for="(item, i) in drawerItems"

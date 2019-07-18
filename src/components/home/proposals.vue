@@ -18,8 +18,8 @@
         </v-card-title>
 
         <v-card-actions>
-        <v-btn flat :to="{name: 'proposal_detail', params: {proposal: proposal, id: proposal.idStr, clientId: proposal.clientIdStr}}">Ingresar</v-btn>
-        <v-btn flat color="blue" :to="{name: 'proposal_edit', params: {description: proposal.description, id: proposal.idStr, name: proposal.name, clientId: proposal.clientIdStr}}">Editar</v-btn>
+        <v-btn flat :to="{name: 'proposal_detail', params: {proposal: proposal}}">Ingresar</v-btn>
+        <v-btn flat color="blue" :to="{name: 'proposal_edit', params: {proposal: proposal}}">Editar</v-btn>
         <v-spacer></v-spacer>
         <v-btn icon @click="show = !show">
             <v-icon>{{ show ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</v-icon>

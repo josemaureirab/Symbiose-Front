@@ -43,12 +43,12 @@ export default new Router({
 
     //Proposals
     {
-      path: '/proposal_detail/:id',
+      path: '/proposal_detail',
       name: 'proposal_detail',
       component: () => import('@/views/proposal/proposal_detail.vue')
     },
     {
-      path: '/proposal_edit/:id',
+      path: '/proposal_edit',
       name: 'proposal_edit',
       component: () => import('@/views/proposal/proposal_edit.vue')
     },

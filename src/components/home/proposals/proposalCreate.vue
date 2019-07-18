@@ -21,7 +21,7 @@
 
             <v-card-title primary-title>
             <div>
-                <div class="headline font-weight-black text-uppercase">{{ this.proposal.name }}</div>
+                <div class="headline font-weight-black text-uppercase">{{ proposal.name }}</div>
                 <br>
                 <v-flex xs6>
                 <v-textarea

@@ -7,7 +7,6 @@
           <router-view/>
         </v-container>
       </v-content>
-      <home-drawer/>
       <home-footer/>
     </v-app> 
     <v-app id="app" v-else>
