@@ -29,7 +29,7 @@
             </v-avatar>
           </v-list-tile-avatar>
           <v-list-tile-title class="ml-3 title">
-            Usuario Symbiose
+            Admin{{user.firstName}}
           </v-list-tile-title>
         </v-list-tile>
         <v-divider/>
@@ -75,14 +75,21 @@ export default {
       color: 'warning',
       image: 'https://demos.creative-tim.com/vue-material-dashboard/img/sidebar-2.32103624.jpg',
       responsive: false,
+      usuarioActual: {}
     }
+  },
+  created() {
+    this.usuarioActual = user
+    console.log(this.$store.state.user)
+    console.log("hola")
   },
   computed: {
     ...mapState([
       'miniVariant',
       'clipped',
       'drawer',
-      'drawerItems'
+      'drawerItems',
+      'user'
     ]),
     inputValue: {
       get () {
@@ -94,6 +101,11 @@ export default {
     },
     sidebarOverlayGradiant () {
       return `${this.$store.state.sidebarBackgroundColor}, ${this.$store.state.sidebarBackgroundColor}`
+    },
+    user: {
+      get () {
+        return this.$store.state.user;
+      }
     },
     miniVariant: {
       get () {
@@ -134,6 +146,7 @@ export default {
   },
   beforeDestroy () {
     window.removeEventListener('resize', this.onResponsiveInverted)
+    this.usuarioActual=this.$store.state.user
   },
   methods: {
     onResponsiveInverted () {
@@ -142,7 +155,8 @@ export default {
       } else {
         this.responsive = false
       }
-    }
+    },
+
   }
 }
 </script>
