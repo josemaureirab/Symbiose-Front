@@ -196,7 +196,7 @@ export default {
         console.log(e)
         console.log(e.response)
       })
-      const link = document.createElement('b')
+      const link = document.createElement('a')
       link.href = "/static/" + "generatedPdf_" + this.proposalId + ".pdf";
       console.log(link.href)
       link.setAttribute('download', name)
