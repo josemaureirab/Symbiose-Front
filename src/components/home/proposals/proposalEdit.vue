@@ -159,7 +159,7 @@ export default {
       console.log(propo)
       console.log(formData)
       axios
-      .post(serverURL+'/upload/', formData)
+      .post('http://projecthunter.tk:8080/symbiose' + '/upload/', formData)
       .then(response => {
         console.log(response)
       })
