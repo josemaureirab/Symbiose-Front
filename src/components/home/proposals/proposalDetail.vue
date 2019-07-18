@@ -92,9 +92,9 @@
 
                 <br>
               <!-- <v-btn round class="font-light buttonClient" @click="descargar(file)">Descargar</v-btn> -->
-              <a href="static/5d30daf4c862f907461fb18d_0.pdf" download="5d30daf4c862f907461fb18d_0.pdf">0</a>
-              <a href="/static/5d30daf4c862f907461fb18d_0.pdf" download="5d30daf4c862f907461fb18d_0.pdf">1</a>
-              <a href="../static/5d30daf4c862f907461fb18d_0.pdf" download="5d30daf4c862f907461fb18d_0.pdf">2</a>
+              <a href="/var/www/Symbiose-Front/static/5d30daf4c862f907461fb18d_0.pdf" download="5d30daf4c862f907461fb18d_0.pdf">0</a>
+              <a href="var/www/Symbiose-Front/static/5d30daf4c862f907461fb18d_0.pdf" download="5d30daf4c862f907461fb18d_0.pdf">1</a>
+              <a href="../var/www/Symbiose-Front/static/5d30daf4c862f907461fb18d_0.pdf" download="5d30daf4c862f907461fb18d_0.pdf">2</a>
               <a href="../../static/5d30daf4c862f907461fb18d_0.pdf" download="5d30daf4c862f907461fb18d_0.pdf">3</a>
               <a href="../../../static/5d30daf4c862f907461fb18d_0.pdf" download="5d30daf4c862f907461fb18d_0.pdf">4</a>
               <a href="@/assets/static/5d30daf4c862f907461fb18d_0.pdf" download="5d30daf4c862f907461fb18d_0.pdf">5</a>
