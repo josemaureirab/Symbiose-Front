@@ -154,8 +154,12 @@ export default {
       let formData = new FormData();
       formData.append('file', file);
       formData.append('proposalId', propo);
+      console.log("Entre")
+      console.log(file)
+      console.log(propo)
+      console.log(formData)
       axios
-      .post('http://projecthunter.tk:8080/symbiose/' + 'upload/', formData)
+      .post('http://projecthunter.tk:8080/symbiose/upload/', formData)
       .then(response => {
         console.log(response)
       })
@@ -175,28 +179,13 @@ export default {
     doThis () {
       this.actualizarPropuesta();
     },
-    dropzone(file){
-      console.log(this.algo)
-      let formData = new FormData();
-      formData.append('file', file);
-      formData.append('proposalId', propo);
-      axios
-      .post('http://localhost:9000/' + 'upload/', formData)
-      .then(response => {
-        console.log(response)
-      })
-      .catch(e => {
-        console.log(e)
-        console.log(e.response)
-      })
-    },
     actualizarPropuesta(){
       let formData = new FormData();
       formData.append('proposalId', this.proposalIdStr);
       formData.append('name', this.proposalName);
       formData.append('description', this.proposalDesc);
       axios
-      .put('http://localhost:9000/' + 'proposals/', formData)
+      .put(this.serverURL + '/proposals/', formData)
       .then(response => {
         this.proposalName = response.data.name
         this.proposalDesc = response.data.description
@@ -209,7 +198,7 @@ export default {
     },
     eliminarPropuesta(){
       axios
-      .delete('http://localhost:9000/' + 'proposals/' + this.proposalId)
+      .delete(this.serverURL + '/proposals/' + this.proposalId)
       .then(response => {
         console.log(response)
       })
@@ -220,7 +209,7 @@ export default {
     },
     getClient(){
       axios
-      .get('http://localhost:9000/' + 'clients/' + this.clientId)
+      .get(this.serverURL + '/clients/' + this.clientId)
       .then(response => {
         this.client = response.data
         console.log(response.data)
@@ -235,7 +224,8 @@ export default {
   computed: {
     ...mapState([
       'proposal',
-      'proposalId'
+      'proposalId',
+      'serverURL'
     ]),
     proposalId: {
       get () {

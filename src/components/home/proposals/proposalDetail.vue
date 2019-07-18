@@ -93,7 +93,6 @@
                </v-list-tile>
             <br>
             <v-btn color="primary" @click="generar()">Descargar propuesta pdf</v-btn>
-            <v-btn color="primary" @click="prueba()">Probar</v-btn>
           </v-card-text>
         </material-card>
       </v-flex>
@@ -157,7 +156,7 @@ export default {
     },
     getClient(){
       axios
-      .get('http://localhost:9000/' + 'clients/' + this.clientId)
+      .get(this.serverURL + '/clients/' + this.clientId)
       .then(response => {
         this.client = response.data
         console.log(response.data)
@@ -173,7 +172,7 @@ export default {
       formData.append('proposalId', this.proposalId);
       formData.append('fileName', file);
       axios
-      .post('http://localhost:9000' + '/upload/getfile', formData)
+      .post(this.serverURL + '/upload/getfile', formData)
       .then(response => {
         console.log(response.data)
         this.forceFileDownload(response.data, file)
@@ -184,7 +183,7 @@ export default {
       let formData = new FormData();
       formData.append('proposalId', this.proposalId);
       axios
-      .post('http://localhost:9000' + '/pdfreport/', formData)
+      .post(this.serverURL + '/pdfreport/', formData)
       .then(response => {
         console.log(response)
       })
@@ -199,25 +198,13 @@ export default {
       console.log(link)
       document.body.appendChild(link)
       link.click()
-    },
-    prueba(){
-      let formData = new FormData();
-      formData.append('array', this.arreglo);
-      axios
-      .post('http://localhost:9000' + '/pdfreport/test', formData)
-      .then(response => {
-        console.log(response)
-      })
-      .catch(e => {
-        console.log(e)
-        console.log(e.response)
-      })
     }
   },
   computed: {
     ...mapState([
       'proposal',
-      'proposalId'
+      'proposalId',
+      'serverURL'
     ]),
     proposalId: {
       get () {

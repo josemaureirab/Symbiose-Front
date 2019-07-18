@@ -64,7 +64,7 @@ export default {
       console.log(this.userName)
       console.log(this.userPass)
       axios
-      .put('http://localhost:9000/' + 'users/login', formData)
+      .put(this.serverURL + '/users/login', formData)
       .then(response => {
         console.log(response)
       })
@@ -73,6 +73,11 @@ export default {
         console.log(e.response)
       })
     }
+  },
+  computed: {
+    ...mapState([
+      'serverURL'  
+    ])
   }
 }
 </script>
