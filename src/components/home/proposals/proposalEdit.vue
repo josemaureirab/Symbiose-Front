@@ -187,6 +187,8 @@ export default {
       formData.append('description', this.proposal.description);
       formData.append('files', this.proposal.files);
       formData.append('user', this.$store.state.user.idStr);
+      console.log("buscando el user")
+      console.log(this.$store.state)
       console.log(formData)
       axios
       .put(this.serverURL + '/proposals/', formData)
