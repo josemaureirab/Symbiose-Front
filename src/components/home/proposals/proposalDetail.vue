@@ -88,13 +88,18 @@
                 class="v-list-item"
                 exact
                 >
-                <v-text-field
-                  v-model="ruta"
-                  data-vv-name="Ruta"
-                ></v-text-field>
+
 
                 <br>
-              <v-btn round class="font-light buttonClient" @click="descargar(file)">Descargar</v-btn>
+              <!-- <v-btn round class="font-light buttonClient" @click="descargar(file)">Descargar</v-btn> -->
+
+              <a v-bind:href="'/static/' + file" @click="downloadFile">V-bind</a>
+              <a v-bind:href="'../static/' + file" @click="downloadFile">Con 1</a>
+              <a v-bind:href="'../../static/' + file" @click="downloadFile">Con 2</a>
+              <a v-bind:href="'../../../static/' + file" @click="downloadFile">Con 3</a>
+              <a v-bind:href="'@/assets/static/' + file" @click="downloadFile">Assets</a>
+
+
 
               <!-- <v-btn round class="font-light buttonClient" @click="descargar(file)">Descargar</v-btn> -->
               <!-- <v-list-tile-title v-text="file"/> -->
