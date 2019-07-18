@@ -4,19 +4,9 @@
           <v-flex xs12 sm8 md4>
             <v-card class="elevation-12">
               <v-toolbar dark color="primary">
-                <v-toolbar-title>Login form</v-toolbar-title>
+                <v-toolbar-title>Inicio de Sesión</v-toolbar-title>
                 <v-spacer></v-spacer>
-                <v-tooltip bottom>
-                  <v-btn
-                    icon
-                    large
-                    target="_blank"
-                    slot="activator"
-                  >
-                    <v-icon large>code</v-icon>
-                  </v-btn>
-                  <span>Source</span>
-                </v-tooltip>
+                
               </v-toolbar>
               <v-card-text>
                 <v-form>
@@ -26,7 +16,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="primary" @click="logear()">Login</v-btn>
+                <v-btn color="primary" @click="logear()">Ingresar</v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>

@@ -24,29 +24,25 @@
             <div>
                 <div class="headline font-weight-black text-uppercase">Crear Propuesta</div>
                 <br>
-                <v-flex xs6>
+                <v-row>
+                  
+                </v-row>
+                <v-flex lg12>
                 <v-textarea
                   name="nombre"
                   label="Nombre"
                   v-model=proposalName
                 ></v-textarea>
               </v-flex>
-              <v-flex xs6>
+              <v-flex lg12>
                 <v-textarea
                   name="descripción"
                   label="Descripción"
                   v-model=proposalDesc
                 ></v-textarea>
               </v-flex>
-              <v-flex xs6>
-                <v-flex v-for="client in clientsList" :key="client.idStr">
-                <v-textarea
-                  name="cliente"
-                  label="Cliente"
-                  v-model=client.name
-                ></v-textarea>
-                </v-flex>
-                <v-select
+              <v-flex lg12>
+                <v-select 
                   :items=nameClients
                   label="Clientes"
                 ></v-select>
