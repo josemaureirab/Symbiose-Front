@@ -39,7 +39,7 @@
             hide-details
           ></v-checkbox>
         </td>
-        <td>{{ props.item.user.firstName }}</td>
+        <td>{{ props.item.proposal.name }}</td>
         <td class="text-xs-right">{{ props.item.commentary }}</td>
         <td class="text-xs-right">{{ props.item.time }}</td>
 
@@ -53,8 +53,8 @@
              <td class="text-xs-left" v-else>Sin cambio en descripción</td>
             </tr>
             <tr>
-              <td class="text-xs-left" v-if="props.item.changes[2] === 1">Cambio de cliente</td>
-             <td class="text-xs-left" v-else>Sin cambio de cliente</td>
+              <td class="text-xs-left" v-if="props.item.changes[2] === 1">Cambio de usuario</td>
+             <td class="text-xs-left" v-else>Sin cambio de usuario</td>
             </tr>
             <tr>
               <td class="text-xs-left" v-if="props.item.changes[3] === 1">Cambio de presupuesto</td>
@@ -98,7 +98,7 @@ export default {
       selected: [],
       headers: [
         {
-          text: 'Usuario',
+          text: 'Propuesta',
           align: 'left',
           value: 'user'
         },
