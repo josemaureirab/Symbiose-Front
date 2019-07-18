@@ -181,7 +181,7 @@ export default {
       })
     },
     descargar(file){
-      this.forceFileDownload(this.ruta+"static/"+file, file)
+      this.forceFileDownload(this.ruta+"static"+file, file)
       // let formData = new FormData();
       // formData.append('proposalId', this.proposalId);
       // formData.append('fileName', file);
