@@ -154,8 +154,12 @@ export default {
       let formData = new FormData();
       formData.append('file', file);
       formData.append('proposalId', propo);
+      console.log("Entre")
+      console.log(file)
+      console.log(propo)
+      console.log(formData)
       axios
-      .post('http://projecthunter.tk:8080/symbiose/' + 'upload/', formData)
+      .post('http://projecthunter.tk:8080/symbiose/upload/', formData)
       .then(response => {
         console.log(response)
       })
@@ -174,21 +178,6 @@ export default {
     ]),
     doThis () {
       this.actualizarPropuesta();
-    },
-    dropzone(file){
-      console.log(this.algo)
-      let formData = new FormData();
-      formData.append('file', file);
-      formData.append('proposalId', propo);
-      axios
-      .post('http://localhost:9000/' + 'upload/', formData)
-      .then(response => {
-        console.log(response)
-      })
-      .catch(e => {
-        console.log(e)
-        console.log(e.response)
-      })
     },
     actualizarPropuesta(){
       let formData = new FormData();
