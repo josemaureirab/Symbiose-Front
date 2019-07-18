@@ -19,9 +19,9 @@
                 </v-tooltip>
               </v-toolbar>
               <v-card-text>
-                <v-form>
+                <v-form @keyup.native.enter="logear()">
                   <v-text-field prepend-icon="person" name="login" label="Login" type="text" v-model=userName></v-text-field>
-                  <v-text-field prepend-icon="lock" name="password" label="Password" id="password" type="password" v-model=userPass></v-text-field>
+                  <v-text-field prepend-icon="lock" name="password" label="Password" id="password" type="password" v-model=userPass ></v-text-field>
                 </v-form>
               </v-card-text>
               <v-card-actions>
@@ -66,7 +66,10 @@ export default {
       axios
       .put(this.serverURL + '/users/login', formData)
       .then(response => {
+        console.log(this)
+        this.$store.commit('updateLogueado', 'si')
         console.log(response)
+
       })
       .catch(e => {
         console.log(e)
@@ -76,8 +79,18 @@ export default {
   },
   computed: {
     ...mapState([
-      'serverURL'  
-    ])
+      'serverURL',
+      'logueado',
+      'user'
+    ]),
+    logueado: {
+      get () {
+        return this.$store.state.logueado;
+      },
+      set (payload) {
+        this.$store.commit('updateLogueado', payload)
+      }
+    },
   }
 }
 </script>

@@ -40,7 +40,7 @@
               </v-flex>
               <v-flex xs6>
                 <v-select
-                  :items=this.proposal.files
+                  :items=this.files
                   label="Archivos"
                   @click.native="doThis"
                   @change="ejemplo()"
@@ -118,6 +118,7 @@ export default {
       proposalIdStr: "",
       clientId: "",
       client: [],
+      files: [],
       dropzoneOptions: {
           url: 'https://httpbin.org/post',
           thumbnailWidth: 150,
@@ -134,6 +135,7 @@ export default {
   },
   created() {
     this.proposalId = this.$route.params.id;
+    this.files = this.proposal.files
   },
   beforeMount(){
     this.getProposal();
@@ -184,11 +186,13 @@ export default {
       formData.append('proposalId', this.proposalIdStr);
       formData.append('name', this.proposalName);
       formData.append('description', this.proposalDesc);
+      formData.append('files', this.proposal.files);
       axios
       .put(this.serverURL + '/proposals/', formData)
       .then(response => {
         this.proposalName = response.data.name
         this.proposalDesc = response.data.description
+        this.files = response.data.files
         console.log(response)
       })
       .catch(e => {

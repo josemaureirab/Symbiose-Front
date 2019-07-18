@@ -18,9 +18,10 @@ export default new Vuex.Store({
       rowsPerPageItems: [1, 2, 4, 8, 16]
     },
     items: [],
+    logueado :'no',
     /* General Stuffs */
-    //serverURL: 'http://localhost:9000',
-    serverURL: 'http://projecthunter.tk:8080/symbiose',
+    serverURL: 'http://localhost:9000',
+    //serverURL: 'http://projecthunter.tk:8080/symbiose',
     proposalList: [],
     clientsList: [],
     usersList: [],
@@ -38,11 +39,7 @@ export default new Vuex.Store({
       {icon: 'mdi-clipboard-outline', title: 'Propuestas', to: '/' },
       { icon: 'mdi-account', title: 'Usuarios', to: '/users' },
       { icon: 'fas fa-mug-hot', title: 'Clientes', to: '/clients' },
-      { icon: 'fas fa-plus-square', title: 'Agregar Propuesta', to: '/createProposal' },
-      { icon: 'fas fa-sign-in-alt', title: 'Login', to: '/login' },
-      /* { icon: 'fas fa-check-double', title: 'Check-out', to: '/checkout'},
-      { icon: 'fas fa-check', title: 'Check-in', to: '/checkin' },
-      { icon: 'mdi-clipboard-outline', title: 'Reservas', to: '/reservations' } */
+      { icon: 'fas fa-plus-square', title: 'Agregar Propuesta', to: '/createProposal' }
     ],
     miniVariant: false,
     right: true,
@@ -122,6 +119,12 @@ export default new Vuex.Store({
     },
     updateProposalId(state, payload) {
       state.proposalId = payload
+    },
+    updateLogueado(state, payload) {
+      state.logueado = payload
+    },
+    updateUser(state, payload) {
+      state.user = payload
     }
   },
   actions: {
