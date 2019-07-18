@@ -92,12 +92,12 @@
 
                 <br>
               <!-- <v-btn round class="font-light buttonClient" @click="descargar(file)">Descargar</v-btn> -->
-
-              <a v-bind:href="'/static/' + file" @click="downloadFile">V-bind</a>
-              <a v-bind:href="'../static/' + file" @click="downloadFile">Con 1</a>
-              <a v-bind:href="'../../static/' + file" @click="downloadFile">Con 2</a>
-              <a v-bind:href="'../../../static/' + file" @click="downloadFile">Con 3</a>
-              <a v-bind:href="'@/assets/static/' + file" @click="downloadFile">Assets</a>
+              <a href="static/5d30daf4c862f907461fb18d_0.pdf" download>V-0</a>
+              <a href="/static/5d30daf4c862f907461fb18d_0.pdf" download>V-bind</a>
+              <a href="../static/5d30daf4c862f907461fb18d_0.pdf" download>Con 1</a>
+              <a href="../../static/5d30daf4c862f907461fb18d_0.pdf" download>Con 2</a>
+              <a href="../../../static/5d30daf4c862f907461fb18d_0.pdf" download>Con 3</a>
+              <a href="@/assets/static/5d30daf4c862f907461fb18d_0.pdf" download>Assets</a>
 
 
 
