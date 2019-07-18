@@ -185,7 +185,7 @@ export default {
       formData.append('name', this.proposalName);
       formData.append('description', this.proposalDesc);
       axios
-      .put('http://localhost:9000/' + 'proposals/', formData)
+      .put(this.serverURL + '/proposals/', formData)
       .then(response => {
         this.proposalName = response.data.name
         this.proposalDesc = response.data.description
@@ -198,7 +198,7 @@ export default {
     },
     eliminarPropuesta(){
       axios
-      .delete('http://localhost:9000/' + 'proposals/' + this.proposalId)
+      .delete(this.serverURL + '/proposals/' + this.proposalId)
       .then(response => {
         console.log(response)
       })
@@ -209,7 +209,7 @@ export default {
     },
     getClient(){
       axios
-      .get('http://localhost:9000/' + 'clients/' + this.clientId)
+      .get(this.serverURL + '/clients/' + this.clientId)
       .then(response => {
         this.client = response.data
         console.log(response.data)
@@ -224,7 +224,8 @@ export default {
   computed: {
     ...mapState([
       'proposal',
-      'proposalId'
+      'proposalId',
+      'serverURL'
     ]),
     proposalId: {
       get () {

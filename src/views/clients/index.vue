@@ -102,7 +102,7 @@ export default {
       formData.append('company', this.client.company);
       formData.append('score', score);
       axios
-      .put('http://localhost:9000/' + 'clients/', formData)
+      .put(this.serverURL + '/clients/', formData)
       .then(response => {
         this.client.name = response.data.name
         this.client.company = response.data.company
@@ -114,6 +114,11 @@ export default {
         console.log(e.response)
       })
     },
+  },
+  computed: {
+    ...mapState([
+      'serverURL'  
+    ])
   }
 }
 </script>

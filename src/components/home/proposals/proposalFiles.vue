@@ -170,7 +170,7 @@ export default {
       formData.append('file', file);
       formData.append('proposalId', propo);
       axios
-      .post('http://localhost:9000/' + 'upload/', formData)
+      .post(this.serverURL + '/upload/', formData)
       .then(response => {
         console.log(response)
       })
@@ -192,7 +192,7 @@ export default {
       formData.append('description', this.proposalDesc);
       //formData.append('description', "probando el cambio");
       axios
-      .put('http://localhost:9000/' + 'proposals/', formData)
+      .put(this.serverURL + '/proposals/', formData)
       .then(response => {
         console.log(response)
       })
@@ -203,7 +203,7 @@ export default {
     },
     eliminarPropuesta(){
       axios
-      .delete('http://localhost:9000/' + 'proposals/' + this.proposalId)
+      .delete(this.serverURL + '/proposals/' + this.proposalId)
       .then(response => {
         console.log(response)
       })
@@ -216,7 +216,8 @@ export default {
   computed: {
     ...mapState([
       'proposal',
-      'proposalId'
+      'proposalId',
+      'serverURL'
     ]),
     proposalId: {
       get () {

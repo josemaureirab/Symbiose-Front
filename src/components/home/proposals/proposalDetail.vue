@@ -157,7 +157,7 @@ export default {
     },
     getClient(){
       axios
-      .get('http://localhost:9000/' + 'clients/' + this.clientId)
+      .get(this.serverURL + '/clients/' + this.clientId)
       .then(response => {
         this.client = response.data
         console.log(response.data)
@@ -173,7 +173,7 @@ export default {
       formData.append('proposalId', this.proposalId);
       formData.append('fileName', file);
       axios
-      .post('http://localhost:9000' + '/upload/getfile', formData)
+      .post(this.serverURL + '/upload/getfile', formData)
       .then(response => {
         console.log(response.data)
         this.forceFileDownload(response.data, file)
@@ -184,7 +184,7 @@ export default {
       let formData = new FormData();
       formData.append('proposalId', this.proposalId);
       axios
-      .post('http://localhost:9000' + '/pdfreport/', formData)
+      .post(this.serverURL + '/pdfreport/', formData)
       .then(response => {
         console.log(response)
       })
@@ -204,7 +204,7 @@ export default {
       let formData = new FormData();
       formData.append('array', this.arreglo);
       axios
-      .post('http://localhost:9000' + '/pdfreport/test', formData)
+      .post(this.serverURL + '/pdfreport/test', formData)
       .then(response => {
         console.log(response)
       })
@@ -217,7 +217,8 @@ export default {
   computed: {
     ...mapState([
       'proposal',
-      'proposalId'
+      'proposalId',
+      'serverURL'
     ]),
     proposalId: {
       get () {
