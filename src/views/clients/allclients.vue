@@ -1,8 +1,10 @@
 <template>
   <div id="home">
     <v-container grid-list-md text-xs-center>
-      <v-layout row wrap>
-        <v-flex v-for="client in clientsList" :key="client.idStr" sm12 xs12 lg4>
+      
+
+      <v-layout row wrap>jhgahjah
+        <v-flex v-for="client in finalClientList" :key="client.idStr" sm12 xs12 lg4>
           <clients-allclients :client="client"/>
         </v-flex>
       </v-layout>
@@ -25,13 +27,22 @@ export default {
     }
   },
   created() {
-    this.getAllClients()
+    this.getClients()
   },
   computed: {
     ...mapState(["clientsList"]),
   },
   methods: {
-    ...mapActions(["getAllClients"])
+    ...mapActions(["getAllClients"]),
+    async getClients () {
+      await this.getAllClients()
+      this.finalClientList = this.clientsList
+    },
+  searchByName () {
+      this.finalClientList = this.clientsList.filter(user => {
+        return ((client.name.toLowerCase()).includes(this.searchedClient.toLowerCase()))
+      })
+    }
   }
 }
 </script>

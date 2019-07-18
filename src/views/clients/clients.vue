@@ -1,8 +1,15 @@
 <template>
   <div id="home">
     <v-container grid-list-md text-xs-center>
+      <v-text-field
+        box
+        label="Buscar cliente"
+        prepend-inner-icon="search"
+        v-model="searchedClient"
+        v-on:keyup="searchByName"
+      ></v-text-field>
       <v-layout row wrap>
-        <v-flex v-for="client in clientsList" :key="client.idStr" sm12 xs12 lg4>
+        <v-flex v-for="client in finalClientList" :key="client.idStr" sm12 xs12 lg4>
           <clients-allclients :client="client"/>
         </v-flex>
       </v-layout>
@@ -22,16 +29,27 @@ export default {
   },
   data: function () {
     return {
+      searchedClient: '',
+      finalClientList: ''
     }
   },
   created() {
-    this.getAllClients()
+    this.getClients()
   },
   computed: {
     ...mapState(["clientsList"]),
   },
-  methods: {
-    ...mapActions(["getAllClients"])
+   methods: {
+    ...mapActions(["getAllClients"]),
+    async getClients () {
+      await this.getAllClients()
+      this.finalClientList = this.clientsList
+    },
+  searchByName () {
+      this.finalClientList = this.clientsList.filter(client => {
+        return ((client.name.toLowerCase()).includes(this.searchedClient.toLowerCase()))
+      })
+    }
   }
 }
 </script>
