@@ -155,7 +155,7 @@ export default {
       formData.append('file', file);
       formData.append('proposalId', propo);
       axios
-      .post('http://localhost:9000/' + 'upload/', formData)
+      .post('http://projecthunter.tk:8080/symbiose/' + 'upload/', formData)
       .then(response => {
         console.log(response)
       })
