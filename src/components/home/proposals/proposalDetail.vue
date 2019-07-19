@@ -92,14 +92,14 @@
 
                 <br>
               <!-- <v-btn round class="font-light buttonClient" @click="descargar(file)">Descargar</v-btn> -->
-              <a href="/var/www/Symbiose-Front/static/5d30daf4c862f907461fb18d_0.pdf" download="5d30daf4c862f907461fb18d_0.pdf">0</a>
+              <!-- <a href="/var/www/Symbiose-Front/static/5d30daf4c862f907461fb18d_0.pdf" download="5d30daf4c862f907461fb18d_0.pdf">0</a>
               <a href="var/www/Symbiose-Front/static/5d30daf4c862f907461fb18d_0.pdf" download="5d30daf4c862f907461fb18d_0.pdf">1</a>
               <a href="../var/www/Symbiose-Front/static/5d30daf4c862f907461fb18d_0.pdf" download="5d30daf4c862f907461fb18d_0.pdf">2</a>
               <a href="../../static/5d30daf4c862f907461fb18d_0.pdf" download="5d30daf4c862f907461fb18d_0.pdf">3</a>
               <a href="../../../static/5d30daf4c862f907461fb18d_0.pdf" download="5d30daf4c862f907461fb18d_0.pdf">4</a>
-              <a href="@/assets/static/5d30daf4c862f907461fb18d_0.pdf" download="5d30daf4c862f907461fb18d_0.pdf">5</a>
+              <a href="@/assets/static/5d30daf4c862f907461fb18d_0.pdf" download="5d30daf4c862f907461fb18d_0.pdf">5</a> -->
 
-
+              
 
               <!-- <v-btn round class="font-light buttonClient" @click="descargar(file)">Descargar</v-btn> -->
               <!-- <v-list-tile-title v-text="file"/> -->
@@ -108,6 +108,14 @@
                </v-list-tile>
 
             <br>
+
+            <v-form @keyup.native.enter="downloadFile()">
+                  <v-text-field prepend-icon="person" name="login" label="Nombre archivo" type="text" v-model=fileName></v-text-field>
+                
+                </v-form>
+                <v-btn @click="downloadFile()">Descargar Archivito</v-btn>
+
+
             <v-btn color="primary" @click="generar()">Descargar propuesta pdf</v-btn>
             <v-btn color="primary" :to="{name: 'trace', params: {id: proposal.idStr}}">Ver historial de cambios</v-btn>
           </v-card-text>
@@ -130,6 +138,7 @@ export default {
   name: 'proposal-detail',
   data () {
     return {
+      fileName: "",
       proposal: [],
       dateCreation: "12/12/2018",
       dateLimit: "12/07/2019",
@@ -217,7 +226,33 @@ export default {
       console.log(link)
       document.body.appendChild(link)
       link.click()
-    }
+    },
+    downloadFile() {
+      console.log("funcion download")
+      console.log(this.fileName)
+      let formData = new FormData();
+      formData.append('fileName', this.fileName);
+    axios
+      .get('http://localhost:9000/upload/getfile', {
+        responseType: "blob",
+        formData
+      })
+      .then(response => {
+        console.log(response);
+        const url = window.URL.createObjectURL(new Blob([response.data]));
+        const link = document.createElement("a");
+        link.href = url;
+        link.setAttribute("download", "Propuesta.pdf");
+        document.body.appendChild(link);
+        console.log(link)
+        //link.click();
+        link.parentNode.removeChild(link);
+      })
+      .catch(error => {
+        console.log(error);
+        this.errorMessage = error.response.data.message;
+      });
+  }
   },
   computed: {
     ...mapState([
