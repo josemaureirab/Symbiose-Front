@@ -32,6 +32,13 @@
             {{userName}}
           </v-list-tile-title>
         </v-list-tile>
+         <v-btn
+              dark
+              flat
+              @click="desloguear()"
+            >
+              Cerrar sesión
+            </v-btn>
         <v-divider/>
         <v-list-tile
           v-if="responsive"
@@ -87,6 +94,14 @@ export default {
       'drawerItems',
       'userName'
     ]),
+    logueado: {
+      get () {
+        return this.$store.state.logueado;
+      },
+      set (payload) {
+        this.$store.commit('updateLogueado', payload)
+      }
+    },
     inputValue: {
       get () {
         return this.$store.state.app.drawer
@@ -152,6 +167,9 @@ export default {
         this.responsive = false
       }
     },
+    desloguear(){
+      this.$store.commit('updateLogueado', 'no')
+    }
 
   }
 }
