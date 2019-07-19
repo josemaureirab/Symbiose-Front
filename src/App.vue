@@ -1,5 +1,5 @@
 <template>
-  <v-app id="app" v-if="this.logueado === 'si'">
+  <v-app id="app" v-if="this.logueado === 'no'">
       <home-leftDrawer/>
       <home-toolbar/>
       <v-content>
