@@ -20,8 +20,8 @@ export default new Vuex.Store({
     items: [],
     logueado :'no',
     /* General Stuffs */
-    serverURL: 'http://localhost:9000',
-    //serverURL: 'http://projecthunter.tk:8080/symbiose',
+    //serverURL: 'http://localhost:9000',
+    serverURL: 'http://projecthunter.tk:8080/symbiose',
     proposalList: [],
     clientsList: [],
     usersList: [],
