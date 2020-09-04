@@ -15,7 +15,7 @@
     "cryptr": "^4.0.2",
     "daypilot-pro-vue": "https://npm.daypilot.org/daypilot-pro-vue/trial/2019.2.3851.tar.gz",
     "moment": "^2.24.0",
-    "node-sass": "^4.9.3",
+    "node-sass": "^4.13.1",
     "roboto-fontface": "*",
     "sass-loader": "^7.1.0",
     "vee-validate": "^2.2.10",
