@@ -10,7 +10,7 @@
     "@amcharts/amcharts4": "^4.4.10",
     "@fortawesome/fontawesome-free": "^5.9.0",
     "@mdi/font": "^2.6.95",
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "core-js": "^2.6.9",
     "cryptr": "^4.0.2",
     "daypilot-pro-vue": "https://npm.daypilot.org/daypilot-pro-vue/trial/2019.2.3851.tar.gz",
